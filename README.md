@@ -54,8 +54,7 @@ First, build fann from source following the [instructions on their repo](https:/
 
 ```zsh
 poetry shell
-LIBRARY_PATH=/usr/local/lib poetry add fann2
-poetry add padatious
+LIBRARY_PATH=/usr/local/lib poetry install --with padatious
 ```
 
 ## Adding skills
@@ -68,4 +67,3 @@ Once the skill is installed, stop your `startup.sh` script and start it again. S
 
 - Padatious does not install easily on M1-3 Macs
 - Sometimes afplay will clip on Macbook default speakers
-# ovos-mac

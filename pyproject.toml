@@ -1,0 +1,42 @@
+[tool.poetry]
+name = "ovos-mac"
+version = "0.1.0"
+description = "Necessary packages for running OVOS natively on Mac OS!"
+authors = ["Mike Gray <mike@graywind.org>"]
+license = "Apache-2.0"
+readme = "README.md"
+packages = [{include = "ovos_mac"}]
+
+[tool.poetry.dependencies]
+python = ">=3.10,<3.12"
+ovos-microphone-plugin-sounddevice = {git = "https://github.com/OpenVoiceOS/ovos-microphone-plugin-sounddevice", rev = "dev"}
+ovos-dinkum-listener = {git = "https://github.com/openvoiceos/ovos-dinkum-listener"}
+neon-tts-plugin-mozilla-remote = "^1.0.0"
+ovos-core = "^0.0.8a84"
+ovos-messagebus = "^0.0.3"
+ovos-audio = "^0.0.2a14"
+ovos-ww-plugin-precise-lite = {extras = ["full"], version = "^0.1.2"}
+tensorflow = "^2.13.0"
+ovos-vad-plugin-silero = "^0.0.1"
+ovos-ww-plugin-openwakeword = "^0.2.1"
+ovos-skill-personal = "^0.0.3"
+ovos-skill-parrot = "^0.0.0"
+ovos-skill-weather = {version = "^0.0.1a14", allow-prereleases = true}
+ovos-stt-plugin-server = "0.0.4a7"
+ovos-tts-plugin-server = {version = "^0.0.2a12", allow-prereleases = true}
+ovos-utils = {git = "https://github.com/mikejgray/ovos-utils", rev = "FEAT_MacSupport"}
+ovos-workshop = ">=0.0.16a7,<0.1.0"
+openwakeword = "<0.6.0"
+ovos-skill-date-time = "^0.2.2"
+ovos-skill-fallback-unknown = ">=0.0.4a1,<1.0"
+ovos-skill-alerts = ">=0.0.1a6"
+ovos-skill-hello-world = ">=0.0.4a2,<1.0"
+ovos-plugin-manager = ">=0.0.26a11,<0.1.0"
+
+[tool.poetry.group.padatious.dependencies]
+fann2 = "^1.1.2"
+padatious = "^0.4.8"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
