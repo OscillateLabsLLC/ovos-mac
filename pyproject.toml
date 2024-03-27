@@ -10,7 +10,7 @@ packages = [{include = "ovos_mac"}]
 [tool.poetry.dependencies]
 python = ">=3.10,<3.12"
 ovos-microphone-plugin-sounddevice = {git = "https://github.com/OpenVoiceOS/ovos-microphone-plugin-sounddevice", rev = "dev"}
-ovos-dinkum-listener = {git = "https://github.com/openvoiceos/ovos-dinkum-listener"}
+ovos-dinkum-listener = {version = "^0.0.3a33", allow-prereleases = true}
 neon-tts-plugin-mozilla-remote = "^1.0.0"
 ovos-core = "^0.0.8a84"
 ovos-messagebus = "^0.0.3"
@@ -26,18 +26,24 @@ ovos-workshop = ">=0.0.16a7,<0.1.0"
 openwakeword = "<0.6.0"
 ovos-plugin-manager = ">=0.0.26a11,<0.1.0"
 ovos-phal-plugin-homeassistant = {version = "^0.0.4a6", allow-prereleases = true}
-neon-homeassistant-skill = {git = "https://github.com/mikejgray/neon-homeassistant-skill", rev = "FEAT_ConfigFlagToDisable", allow-prereleases = true}
+padatious = "^0.4.8"
+ovos-microphone-plugin-pyaudio = "^0.0.0a2"
+ovos-phal-plugin-ipgeo = "^0.0.2"
+ovos-phal = {version = "^0.0.5a15", allow-prereleases = true}
 
 [tool.poetry.group.skills.dependencies]
+neon-homeassistant-skill = {git = "https://github.com/mikejgray/neon-homeassistant-skill", rev = "FEAT_ConfigFlagToDisable", allow-prereleases = true}
+ovos-skill-icanhazdadjokes = {git = "https://github.com/OpenVoiceOS/skill-ovos-icanhazdadjokes"}
 ovos-skill-personal = {version="^0.0.3", allow-prereleases = true}
-ovos-skill-parrot = "^0.0.0"
+ovos-skill-parrot = {version = "^0.0.0", allow-prereleases = true}
 ovos-skill-weather = {version = "^0.0.1a14", allow-prereleases = true}
-ovos-skill-date-time = "^0.2.2"
-ovos-skill-fallback-unknown = ">=0.0.4a1,<1.0"
-ovos-skill-alerts = ">=0.0.1a6"
-ovos-skill-hello-world = ">=0.0.4a2,<1.0"
-skill-randomness = {git = "https://github.com/OpenVoiceOS/skill-ovos-randomness"}
+ovos-skill-date-time = {version = "^0.2.2", allow-prereleases = true}
+ovos-skill-fallback-unknown = {version = ">=0.0.4a1,<1.0", allow-prereleases = true}
+ovos-skill-alerts = {version = ">=0.0.1a6", allow-prereleases = true}
+ovos-skill-hello-world = {version = ">=0.0.4a2,<1.0", allow-prereleases = true}
 skill-wolfie = {git = "https://github.com/OpenVoiceOS/skill-ovos-wolfie/"}
+ovos-skill-boot-finished = {git = "https://github.com/OpenVoiceOS/skill-ovos-boot-finished.git"}
+ovos-skill-wikipedia = {git = "https://github.com/OpenVoiceOS/skill-ovos-wikipedia.git"}
 
 [tool.poetry.group.padatious.dependencies]
 fann2 = "^1.1.2"

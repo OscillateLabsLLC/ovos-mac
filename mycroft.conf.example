@@ -1,0 +1,23 @@
+{
+  // For US users, uncomment the two lines below to get Fahrenheit and 12-hour time
+  //   "system_unit": "imperial",
+  //   "time_format": "half",
+  "play_wav_cmdline": "afplay %1",
+  "play_mp3_cmdline": "afplay %1",
+  "listener": {
+    "silence_end": 0.5,
+    "recording_timeout": 7,
+    "microphone": {
+      "module": "ovos-microphone-plugin-pyaudio"
+    },
+    "VAD": {
+      "module": "ovos-vad-plugin-silero",
+      "ovos-vad-plugin-silero": {
+        "threshold": 0.5
+      }
+    }
+  },
+  "padatious": {
+    "regex_only": false
+  }
+}

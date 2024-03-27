@@ -15,7 +15,7 @@ Tested on an M1 Macbook Air and an M2 Macbook Pro.
 
 ## Considerations
 
-- Padatious does not install very well on an M1-3 Mac. Padacioso will be the default, but note it is quite a bit slower than Padatious. To install Padatious anyway, [see the below section](#installing-padatious).
+- Padatious does not install very easily on an M1-3 Mac. Padacioso will be the default, but note it is quite a bit slower than Padatious. To install Padatious anyway, [see the below section](#installing-padatious).
 
 ## Steps
 
@@ -26,8 +26,10 @@ Set up a few minimal requirements in `~/.config/mycroft/mycroft.conf`:
   "play_wav_cmdline": "afplay %1",
   "play_mp3_cmdline": "afplay %1",
   "listener": {
+    "silence_end": 0.5,
+    "recording_timeout": 7,
     "microphone": {
-      "module": "ovos-microphone-plugin-sounddevice"
+      "module": "ovos-microphone-plugin-pyaudio"
     },
     "VAD": {
       "module": "ovos-vad-plugin-silero",
@@ -35,6 +37,9 @@ Set up a few minimal requirements in `~/.config/mycroft/mycroft.conf`:
         "threshold": 0.5
       }
     }
+  },
+  "padatious": {
+    "regex_only": false
   }
 }
 ```
@@ -45,16 +50,21 @@ Then clone this repo, cd into the directory, and run:
 # brew install poetry # If you don't have it
 poetry install --without padatious # Or just poetry install if you want Padatious
 poetry shell
+ovos-messagebus & # Keep the message bus running in the background, no need to shut it down and spin it up each time
+ovos-dinkum-listener & # There's a known issue with the pyaudio mic plugin on Mac, so we start this manually.
+# If ovos-dinkum-listener fails, start it again until it succeeds.
 ./startup.sh
 ```
 
 ## Installing Padatious
 
-First, build fann from source following the [instructions on their repo](https://github.com/FutureLinkCorporation/fann2). Then run:
+First, build fann from source following the [instructions on their repo](https://github.com/libfann/fann). Then run:
 
 ```zsh
+brew install portaudio swig
 poetry shell
 LIBRARY_PATH=/usr/local/lib poetry install --with padatious
+ln -s /usr/local/lib/libdoublefann.2.dylib .
 ```
 
 ## Adding skills
@@ -69,3 +79,5 @@ Once the skill is installed, stop your `startup.sh` script and start it again. S
 - Sometimes afplay will clip on Macbook default speakers
 - Vosk does not install on an Apple Silicon Mac
 - pocketsphinx does not install on an Apple Silicon Mac
+- ovos-microphone-plugin-sounddevice sometimes creates very clipped recordings, so we instead use the PyAudio plugin for the listener
+- ovos-microphone-plugin-pyaudio has microphone buffer overflow issues periodically
