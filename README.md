@@ -67,3 +67,5 @@ Once the skill is installed, stop your `startup.sh` script and start it again. S
 
 - Padatious does not install easily on M1-3 Macs
 - Sometimes afplay will clip on Macbook default speakers
+- Vosk does not install on an Apple Silicon Mac
+- pocketsphinx does not install on an Apple Silicon Mac

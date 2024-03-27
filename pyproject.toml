@@ -19,19 +19,25 @@ ovos-ww-plugin-precise-lite = {extras = ["full"], version = "^0.1.2"}
 tensorflow = "^2.13.0"
 ovos-vad-plugin-silero = "^0.0.1"
 ovos-ww-plugin-openwakeword = "^0.2.1"
-ovos-skill-personal = "^0.0.3"
-ovos-skill-parrot = "^0.0.0"
-ovos-skill-weather = {version = "^0.0.1a14", allow-prereleases = true}
 ovos-stt-plugin-server = "0.0.4a7"
 ovos-tts-plugin-server = {version = "^0.0.2a12", allow-prereleases = true}
-ovos-utils = {git = "https://github.com/mikejgray/ovos-utils", rev = "FEAT_MacSupport"}
+ovos-utils = {git = "https://github.com/OpenVoiceOS/ovos-utils"}
 ovos-workshop = ">=0.0.16a7,<0.1.0"
 openwakeword = "<0.6.0"
+ovos-plugin-manager = ">=0.0.26a11,<0.1.0"
+ovos-phal-plugin-homeassistant = {version = "^0.0.4a6", allow-prereleases = true}
+neon-homeassistant-skill = {git = "https://github.com/mikejgray/neon-homeassistant-skill", rev = "FEAT_ConfigFlagToDisable", allow-prereleases = true}
+
+[tool.poetry.group.skills.dependencies]
+ovos-skill-personal = {version="^0.0.3", allow-prereleases = true}
+ovos-skill-parrot = "^0.0.0"
+ovos-skill-weather = {version = "^0.0.1a14", allow-prereleases = true}
 ovos-skill-date-time = "^0.2.2"
 ovos-skill-fallback-unknown = ">=0.0.4a1,<1.0"
 ovos-skill-alerts = ">=0.0.1a6"
 ovos-skill-hello-world = ">=0.0.4a2,<1.0"
-ovos-plugin-manager = ">=0.0.26a11,<0.1.0"
+skill-randomness = {git = "https://github.com/OpenVoiceOS/skill-ovos-randomness"}
+skill-wolfie = {git = "https://github.com/OpenVoiceOS/skill-ovos-wolfie/"}
 
 [tool.poetry.group.padatious.dependencies]
 fann2 = "^1.1.2"
