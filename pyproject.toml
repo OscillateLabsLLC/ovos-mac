@@ -44,10 +44,21 @@ ovos-skill-hello-world = {version = ">=0.0.4a2,<1.0", allow-prereleases = true}
 skill-wolfie = {git = "https://github.com/OpenVoiceOS/skill-ovos-wolfie/"}
 ovos-skill-boot-finished = {git = "https://github.com/OpenVoiceOS/skill-ovos-boot-finished.git"}
 ovos-skill-wikipedia = {git = "https://github.com/OpenVoiceOS/skill-ovos-wikipedia.git"}
+skill-randomness = {git = "https://github.com/OpenVoiceOS/skill-ovos-randomness"}
+skill-easter-eggs = {git = "https://github.com/OpenVoiceOS/ovos-skill-easter-eggs", rev = "dev"}
+calendar-skill = {git = "https://github.com/mikejgray/calendar-skill"}
 
 [tool.poetry.group.padatious.dependencies]
 fann2 = "^1.1.2"
 padatious = "^0.4.8"
+
+[tool.poetry.group.media.dependencies]
+ovos-media = "^0.0.1a17"
+ovos-media-plugin-vlc = "^0.1.0a3"
+ovos-media-plugin-webbrowser = {git = "https://github.com/NeonGeckoCom/ovos-media-plugin-webbrowser"}
+ovos-ocp-youtube-plugin = {git = "https://github.com/OpenVoiceOS/ovos-ocp-youtube-plugin"}
+ovos-skill-somafm = {git = "https://github.com/OpenVoiceOS/skill-ovos-somafm"}
+ovos-skill-chiptune-planet = {git = "https://github.com/JarbasSkills/skill-chiptune-planet"}
 
 [build-system]
 requires = ["poetry-core"]
