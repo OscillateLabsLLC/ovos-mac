@@ -14,12 +14,12 @@ cleanup() {
 echo "Please be sure to start the ovos-messagebus before starting the other services"
 ./ovos_PHAL &
 ovos_phal_pid=$!
-./ovos_PHAL_admin &
-ovos_phal_admin_pid=$!
 ovos-audio &
 ovos_audio_pid=$!
 ovos-core &
 ovos_core_pid=$!
+sudo ./ovos_PHAL_admin &
+ovos_phal_admin_pid=$!
 
 # Trap exit, interrupt, and termination signals and call cleanup function
 trap cleanup EXIT SIGINT SIGTERM

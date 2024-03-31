@@ -67,6 +67,8 @@ LIBRARY_PATH=/usr/local/lib poetry install --with padatious
 ln -s /usr/local/lib/libdoublefann.2.dylib .
 ```
 
+`fann` is also available on Homebrew but I haven't tested using it. If you want to try it, run `brew install fann` instead of building it from source. Feel free to PR any changes you need to make to the above instructions.
+
 ## Adding skills
 
 OVOS skills are just Python packages, so you can simply run `poetry add my-skill` to add a skill to your environment. You can also clone a skill repo and add it to your environment with `poetry add /path/to/my-skill`. Finally, you can also add a skill from a git repo with `poetry add git+https://my-skill/repo.git`.
@@ -80,4 +82,4 @@ Once the skill is installed, stop your `startup.sh` script and start it again. S
 - Vosk does not install on an Apple Silicon Mac
 - pocketsphinx does not install on an Apple Silicon Mac
 - ovos-microphone-plugin-sounddevice sometimes creates very clipped recordings, so we instead use the PyAudio plugin for the listener
-- ovos-microphone-plugin-pyaudio has microphone buffer overflow issues periodically
+- ovos-microphone-plugin-pyaudio has microphone buffer overflow issues periodically, which can be alleviated by making the `chunk_size` property obnoxiously large (16000 seems to work consistently for me when I have problems, but it means the listening sound takes forever. Just state your request right after the wakeword and it's fine)
