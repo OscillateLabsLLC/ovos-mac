@@ -18,6 +18,7 @@ ovos-plugin-manager = ">=0.0.26a11,<0.1.0"
 ovos-utils = {git = "https://github.com/OpenVoiceOS/ovos-utils", rev="dev"}
 ovos-workshop = ">=0.0.16a7,<0.1.0"
 tensorflow = "^2.13.0"
+tensorflow-metal = "^1.1.0"
 openwakeword = "<0.6.0"
 padatious = "^0.4.8"
 ovos-ww-plugin-precise-lite = {extras = ["full"], version = "^0.1.2"}
@@ -32,6 +33,7 @@ ovos-tts-plugin-edge-tts = {git = "https://github.com/OpenVoiceOS/ovos-tts-plugi
 ovos-stt-plugin-chromium = {git = "https://github.com/OpenVoiceOS/ovos-stt-plugin-chromium"}
 ovos-phal-plugin-ipgeo = "^0.0.2"
 ovos-phal-plugin-homeassistant = {version = "^0.0.4a6", allow-prereleases = true}
+cython = "^3.0.10"
 
 [tool.poetry.group.skills.dependencies]
 ovos-skill-personal = "0.0.4a8"
@@ -61,6 +63,7 @@ skill-easter-eggs = {git = "https://github.com/OpenVoiceOS/ovos-skill-easter-egg
 # Help me decide something: Jets or Sharks
 # Say "Thanks for watching!"
 ovos-skill-hcandersen = {git = "https://github.com/andlo/ovos-skill-fairytales"}
+ovos-skill-audio-recording = {git = "https://github.com/OpenVoiceOS/skill-ovos-audio-recording"}
 
 [tool.poetry.group.padatious.dependencies]
 fann2 = "^1.1.2"
