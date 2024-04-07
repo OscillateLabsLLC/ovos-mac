@@ -1,8 +1,8 @@
-# ovos-mac
+# neon-mac
 
-Run OVOS natively on Mac OS. No containers, no PulseAudio - just pure Python.
+Run Neon natively on Mac OS. No containers, no PulseAudio - just pure Python.
 
-Very much a work in progress! This is intended a proof-of-concept, not as comprehensive instructions. For support, please visit [Matrix chat](https://matrix.to/#/#OpenVoiceOS-Support:matrix.org) or open an issue on this repo.
+Very much a work in progress! This is intended a proof-of-concept, not as comprehensive instructions. For support, please open an issue on this repo.
 
 Tested on an M1 Macbook Air and an M2 Macbook Pro.
 
@@ -15,7 +15,7 @@ Tested on an M1 Macbook Air and an M2 Macbook Pro.
 
 ## Considerations
 
-- Padatious does not install very easily on an M1-3 Mac. Padacioso will be the default, but note it is quite a bit slower than Padatious. To install Padatious anyway, [see the below section](#installing-padatious).
+- Padatious does not install very easily on an Apple Silicon Mac. Padacioso will be the default, but note it is quite a bit slower than Padatious. To install Padatious anyway, [see the below section](#installing-padatious).
 
 ## Steps
 
@@ -79,7 +79,38 @@ Once the skill is installed, stop your `startup.sh` script and start it again. S
 
 - Padatious does not install easily on M1-3 Macs
 - Sometimes afplay will clip on Macbook default speakers
-- Vosk does not install on an Apple Silicon Mac
-- pocketsphinx does not install on an Apple Silicon Mac
+- Vosk does not install on an Apple Silicon Mac - TODO: This isn't true anymore, so come up with instructions
+- pocketsphinx does not install on an Apple Silicon Mac - TODO: This isn't true but you need 5.0+, which isn't compatible with OVOS/Neon packages
 - ovos-microphone-plugin-sounddevice sometimes creates very clipped recordings, so we instead use the PyAudio plugin for the listener
 - ovos-microphone-plugin-pyaudio has microphone buffer overflow issues periodically, which can be alleviated by making the `chunk_size` property obnoxiously large (16000 seems to work consistently for me when I have problems, but it means the listening sound takes forever. Just state your request right after the wakeword and it's fine)
+
+<!-- 2024-04-07 09:11:36.425 - skills - ovos_core.skill_manager:_load_plugin_skill:461 - ERROR - Load of skill skill-fallback_llm.neongeckocom failed!
+Traceback (most recent call last):
+  File "/Users/Mike/Library/Caches/pypoetry/virtualenvs/neon-mac-sv8wqWXe-py3.10/lib/python3.10/site-packages/ovos_workshop/skill_launcher.py", line 459, in _create_skill_instance
+    return False
+  File "/Users/Mike/Library/Caches/pypoetry/virtualenvs/neon-mac-sv8wqWXe-py3.10/lib/python3.10/site-packages/ovos_workshop/decorators/compat.py", line 40, in func_wrapper
+    return func(*args, **kwargs)
+  File "/Users/Mike/Library/Caches/pypoetry/virtualenvs/neon-mac-sv8wqWXe-py3.10/lib/python3.10/site-packages/ovos_workshop/skills/fallback.py", line 81, in __new__
+    return super().__new__(cls)
+TypeError: object.__new__() takes exactly one argument (the type to instantiate)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/Mike/Library/Caches/pypoetry/virtualenvs/neon-mac-sv8wqWXe-py3.10/lib/python3.10/site-packages/ovos_core/skill_manager.py", line 459, in _load_plugin_skill
+    load_status = skill_loader.load(skill_plugin)
+  File "/Users/Mike/Library/Caches/pypoetry/virtualenvs/neon-mac-sv8wqWXe-py3.10/lib/python3.10/site-packages/ovos_workshop/skill_launcher.py", line 519, in load
+    def load(self, skill_class: Optional[callable] = None) -> bool:
+  File "/Users/Mike/Library/Caches/pypoetry/virtualenvs/neon-mac-sv8wqWXe-py3.10/lib/python3.10/site-packages/ovos_workshop/skill_launcher.py", line 531, in _load
+    def _load(self):
+  File "/Users/Mike/Library/Caches/pypoetry/virtualenvs/neon-mac-sv8wqWXe-py3.10/lib/python3.10/site-packages/ovos_workshop/skill_launcher.py", line 464, in _create_skill_instance
+    # if the signature supports skill_id and bus pass them
+  File "/Users/Mike/Library/Caches/pypoetry/virtualenvs/neon-mac-sv8wqWXe-py3.10/lib/python3.10/site-packages/skill_fallback_llm/__init__.py", line 58, in __init__
+    self.register_entity_file("llm.entity")
+  File "/Users/Mike/Library/Caches/pypoetry/virtualenvs/neon-mac-sv8wqWXe-py3.10/lib/python3.10/site-packages/ovos_workshop/skills/ovos.py", line 1303, in register_entity_file
+    self.intent_service.register_padatious_entity(name, filename, lang)
+  File "/Users/Mike/Library/Caches/pypoetry/virtualenvs/neon-mac-sv8wqWXe-py3.10/lib/python3.10/site-packages/ovos_workshop/intents.py", line 449, in register_padatious_entity
+    self.bus.emit(msg.forward('padatious:register_entity',
+  File "/Users/Mike/Library/Caches/pypoetry/virtualenvs/neon-mac-sv8wqWXe-py3.10/lib/python3.10/site-packages/ovos_workshop/intents.py", line 259, in bus
+    raise RuntimeError("bus not set. call `set_bus()` before trying to"
+RuntimeError: bus not set. call `set_bus()` before trying tointeract with the Messagebus -->

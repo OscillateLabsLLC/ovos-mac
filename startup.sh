@@ -3,7 +3,7 @@
 # Function to kill background processes upon exit
 cleanup() {
     echo "Killing background processes..."
-    for pid in $ovos_media_pid $ovos_audio_pid $ovos_core_pid $ovos_phal_pid $ovos_phal_admin_pid; do
+    for pid in $neon_enclosure_pid $neon_speech_pid $neon_audio_pid $neon_core_pid $neon_gui_pid $neon_messagebus_pid; do
         if [[ -n $pid ]]; then
             kill $pid 2>/dev/null
         fi
@@ -11,15 +11,21 @@ cleanup() {
 }
 
 # Start processes in the background and save their PIDs
-echo "Please be sure to start the ovos-messagebus before starting the other services"
-./ovos_PHAL &
-ovos_phal_pid=$!
-ovos-audio &
-ovos_audio_pid=$!
-ovos-core &
-ovos_core_pid=$!
-sudo ./ovos_PHAL_admin &
-ovos_phal_admin_pid=$!
+neon-messagebus run &
+neon_messagebus_pid=$!
+neon-enclosure run &
+neon_enclosure_pid=$!
+neon-speech run &
+neon_speech_pid=$!
+neon-audio run &
+neon_audio_pid=$!
+neon run-skills &
+neon_core_pid=$!
+neon-gui run &
+neon_gui_pid=$!
+
+# sudo neon-enclosure run &
+# neon_enclosure_admin_pid=$!
 
 # Trap exit, interrupt, and termination signals and call cleanup function
 trap cleanup EXIT SIGINT SIGTERM
