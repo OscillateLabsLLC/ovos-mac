@@ -114,3 +114,6 @@ Traceback (most recent call last):
   File "/Users/Mike/Library/Caches/pypoetry/virtualenvs/neon-mac-sv8wqWXe-py3.10/lib/python3.10/site-packages/ovos_workshop/intents.py", line 259, in bus
     raise RuntimeError("bus not set. call `set_bus()` before trying to"
 RuntimeError: bus not set. call `set_bus()` before trying tointeract with the Messagebus -->
+
+<!-- py2app: Supports creating macOS .app bundles from a Python project. -->
+<!-- Briefcase: Part of the BeeWare Project; a cross-platform packaging tool that supports creation of .app bundles on macOS, as well as managing signing and notarization. -->

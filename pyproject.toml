@@ -42,7 +42,8 @@ cython = "^3.0.10"
 vosk = { path = "/Users/Mike/Downloads/vosk-0.3.44-py3-none-macosx_10_6_universal2.whl" }
 ovos-dinkum-listener = { version = "0.0.3a16", allow-prereleases = true }
 ovos-ww-plugin-precise = "^0.1.1"
-ovos-gui = {git = "https://github.com/OpenVoiceOS/ovos-gui", rev = "FEAT_ReactGuiSupport"}
+ovos-gui = { path = "../ovos-gui" }
+calendar-skill = {path = "../calendar-skill"}
 
 [tool.poetry.group.skills.dependencies]
 neon-skill-launcher = "^1.0.1"
@@ -62,7 +63,7 @@ ovos-skill-homescreen = ">=0.0.3a16,<0.1.0"
 #ovos-skill-wikipedia = {git = "https://github.com/OpenVoiceOS/skill-ovos-wikipedia.git"}
 skill-randomness = { git = "https://github.com/OpenVoiceOS/skill-ovos-randomness" }
 skill-easter-eggs = { git = "https://github.com/OpenVoiceOS/ovos-skill-easter-eggs", rev = "dev" }
-#calendar-skill = {git = "https://github.com/mikejgray/calendar-skill"}
+calendar-skill = { path = "../calendar-skill" }
 
 [tool.poetry.group.padatious.dependencies]
 fann2 = "<1.1.0"

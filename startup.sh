@@ -11,8 +11,8 @@ cleanup() {
 }
 
 # Start processes in the background and save their PIDs
-neon-messagebus run &
-neon_messagebus_pid=$!
+# neon-messagebus run &
+# neon_messagebus_pid=$!
 neon-enclosure run &
 neon_enclosure_pid=$!
 neon-speech run &
