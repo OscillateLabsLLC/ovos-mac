@@ -20,6 +20,8 @@ ovos-core &
 ovos_core_pid=$!
 sudo ./ovos_PHAL_admin &
 ovos_phal_admin_pid=$!
+ovos-media &
+ovos_media_pid=$!
 
 # Trap exit, interrupt, and termination signals and call cleanup function
 trap cleanup EXIT SIGINT SIGTERM

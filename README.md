@@ -83,3 +83,4 @@ Once the skill is installed, stop your `startup.sh` script and start it again. S
 - pocketsphinx does not install on an Apple Silicon Mac
 - ovos-microphone-plugin-sounddevice sometimes creates very clipped recordings, so we instead use the PyAudio plugin for the listener
 - ovos-microphone-plugin-pyaudio has microphone buffer overflow issues periodically, which can be alleviated by making the `chunk_size` property obnoxiously large (16000 seems to work consistently for me when I have problems, but it means the listening sound takes forever. Just state your request right after the wakeword and it's fine)
+- The buffer overflows are sometimes caused by an iPhone connecting as a microphone. Disconnecting the iPhone usually fixes the issue.
