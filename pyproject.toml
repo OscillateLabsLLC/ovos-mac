@@ -9,61 +9,56 @@ packages = [{ include = "neon_mac" }]
 
 [tool.poetry.dependencies]
 python = "^3.10,<3.11"
-neon-utterance-normalizer-plugin = { git = "https://github.com/NeonGeckoCom/neon-utterance-plugin-normalizer" }
-neon-core = { path = "../neoncore", extras = ["skills_default"] }
-neon-messagebus = "^2.0.1"
-neon-audio = "^1.5.1"
-neon-enclosure = "^1.6.1"
-neon-gui = "^1.2.2"
-neon-transcripts-controller = { git = "https://github.com/NeonGeckoCom/transcripts_controller" }
-ovos-utils = "0.0.38"
-neon-utterance-translator-plugin = { git = "https://github.com/NeonGeckoCom/neon-utterance-plugin-translator" }
-neon-speech = { git = "https://github.com/mikejgray/neon_speech" }
-ovos-core = "^0.0.8a84"
-ovos-bus-client = { version = "^0.0.9a1", allow-prereleases = true }
-ovos-plugin-manager = ">=0.0.25,<0.1.0"
-ovos-workshop = ">=0.0.15,<0.1.0"
 tensorflow = "^2.13.0"
 tensorflow-metal = "^1.1.0"
-openwakeword = "<0.6.0"
 padatious = "^0.4.8"
 ovos-ww-plugin-precise-lite = { extras = ["full"], version = "^0.1.2" }
 ovos-ww-plugin-openwakeword = { git = "https://github.com/OpenVoiceOS/ovos-ww-plugin-openWakeWord" }
 ovos-vad-plugin-silero = "^0.0.1"
 ovos-microphone-plugin-pyaudio = "^0.0.0a2"
-ovos-stt-plugin-server = "0.0.4a7"
+ovos-stt-plugin-server = { version = "0.0.4a7", allow-prereleases = true }
 ovos-tts-plugin-server = { version = "^0.0.2a12", allow-prereleases = true }
 neon-tts-plugin-mozilla-remote = "^1.0.0"
-# ovos-tts-plugin-edge-tts = {git = "https://github.com/OpenVoiceOS/ovos-tts-plugin-edge-tts"}
-# ovos-stt-plugin-chromium = {git = "https://github.com/OpenVoiceOS/ovos-stt-plugin-chromium"}
-ovos-phal-plugin-ipgeo = "^0.0.2"
+ovos-stt-plugin-chromium = { git = "https://github.com/OpenVoiceOS/ovos-stt-plugin-chromium" }
+ovos-phal-plugin-ipgeo = { version = "^0.0.2", allow-prereleases = true }
 ovos-phal-plugin-homeassistant = { version = "^0.0.4a6", allow-prereleases = true }
 cython = "^3.0.10"
 vosk = { path = "/Users/Mike/Downloads/vosk-0.3.44-py3-none-macosx_10_6_universal2.whl" }
-ovos-dinkum-listener = { version = "0.0.3a16", allow-prereleases = true }
 ovos-ww-plugin-precise = "^0.1.1"
-ovos-gui = { path = "../ovos-gui" }
-calendar-skill = {path = "../calendar-skill"}
+ovos-ww-plugin-vosk = { version = "^0.1.2a1", allow-prereleases = true }
+neon-transcripts-controller = { git = "https://github.com/NeonGeckoCom/transcripts_controller" }
+neon-utils = { version = "^1.10.0", allow-prereleases = true }
+neon-messagebus = { version = "^2.0.2a6", allow-prereleases = true }
+neon-utterance-normalizer-plugin = { version = "^0.1.0", allow-prereleases = true }
+neon-audio = { version = "^1.5.2a3", allow-prereleases = true }
+neon-api-proxy = { version = "^0.5.1a2", allow-prereleases = true }
+neon-mq-connector = { version = "^0.7.2a2", allow-prereleases = true }
+ovos-bus-client = { version = "^0.0.9a18", allow-prereleases = true }
+neon-utterance-translator-plugin = { version = "^0.2.1a1", allow-prereleases = true }
+neon-enclosure = { version = "^1.7.1a1", allow-prereleases = true }
+ovos-plugin-manager = { version = "^0.0.26a15", allow-prereleases = true }
+neon-speech = { path = "../neon_speech" }                                                            # For Mac, since the package forces the alsa mic plugin and Mac doesn't come with alsa
+ovos-core = { version = "^0.0.8a93", allow-prereleases = true }
+neon-transformers = { version = "^0.2.1a4", allow-prereleases = true }
 
 [tool.poetry.group.skills.dependencies]
-neon-skill-launcher = "^1.0.1"
 neon-homeassistant-skill = { git = "https://github.com/mikejgray/neon-homeassistant-skill", rev = "FEAT_ConfigFlagToDisable", allow-prereleases = true }
 ovos-skill-icanhazdadjokes = { git = "https://github.com/OpenVoiceOS/skill-ovos-icanhazdadjokes" }
-neon-skill-date-time = "^1.1.0"
-ovos-skill-homescreen = ">=0.0.3a16,<0.1.0"
-# ovos-skill-personal = "0.0.4a8"
-# ovos-skill-parrot = {version = "^0.0.0", allow-prereleases = true}
-# ovos-skill-weather = {version = "^0.0.1a14", allow-prereleases = true}
-# ovos-skill-date-time = {version = "^0.2.2", allow-prereleases = true}
-# ovos-skill-fallback-unknown = {version = ">=0.0.4a1,<1.0", allow-prereleases = true}
-# ovos-skill-alerts = {version = ">=0.0.1a6", allow-prereleases = true}
-#ovos-skill-hello-world = {version = ">=0.0.4a2,<1.0", allow-prereleases = true}
-# skill-wolfie = {git = "https://github.com/OpenVoiceOS/skill-ovos-wolfie/"}
-#ovos-skill-boot-finished = {git = "https://github.com/OpenVoiceOS/skill-ovos-boot-finished.git"}
-#ovos-skill-wikipedia = {git = "https://github.com/OpenVoiceOS/skill-ovos-wikipedia.git"}
+neon-skill-date-time = "^1.1.1a1"
 skill-randomness = { git = "https://github.com/OpenVoiceOS/skill-ovos-randomness" }
 skill-easter-eggs = { git = "https://github.com/OpenVoiceOS/ovos-skill-easter-eggs", rev = "dev" }
-calendar-skill = { path = "../calendar-skill" }
+neon-skill-about = "^1.0.1"
+neon-skill-alerts = "^3.0.0"
+neon-skill-ip-address = "^1.2.0"
+neon-skill-speak = "^2.0.1"
+neon-skill-speed-test = "^1.0.2"
+neon-skill-spelling = "^1.1.0"
+neon-skill-fallback-llm = { version = "^1.0.1", allow-prereleases = true }
+neon-skill-fallback-wolfram-alpha = { version = "^2.0.0", allow-prereleases = true }
+neon-skill-personal = "^1.0.1"
+neon-skill-user-settings = "^1.0.5"
+neon-skill-weather = "^2.0.0"
+neon-skill-wikipedia = "^1.0.2"
 
 [tool.poetry.group.padatious.dependencies]
 fann2 = "<1.1.0"

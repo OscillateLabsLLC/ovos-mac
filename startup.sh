@@ -21,8 +21,8 @@ neon-audio run &
 neon_audio_pid=$!
 neon run-skills &
 neon_core_pid=$!
-neon-gui run &
-neon_gui_pid=$!
+# neon-gui run &
+# neon_gui_pid=$!
 
 # sudo neon-enclosure run &
 # neon_enclosure_admin_pid=$!
