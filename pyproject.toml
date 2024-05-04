@@ -40,6 +40,7 @@ ovos-plugin-manager = { version = "^0.0.26a15", allow-prereleases = true }
 neon-speech = { path = "../neon_speech" }                                                            # For Mac, since the package forces the alsa mic plugin and Mac doesn't come with alsa
 ovos-core = { version = "^0.0.8a93", allow-prereleases = true }
 neon-transformers = { version = "^0.2.1a4", allow-prereleases = true }
+ovos-tts-plugin-edge-tts = {git = "https://github.com/OpenVoiceOS/ovos-tts-plugin-edge-tts"}
 
 [tool.poetry.group.skills.dependencies]
 neon-homeassistant-skill = { git = "https://github.com/mikejgray/neon-homeassistant-skill", rev = "FEAT_ConfigFlagToDisable", allow-prereleases = true }
