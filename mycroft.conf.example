@@ -4,6 +4,8 @@
   //   "time_format": "half",
   "play_wav_cmdline": "afplay %1",
   "play_mp3_cmdline": "afplay %1",
+  "enable_old_audioservice": true,
+  "disable_ocp": false,
   "listener": {
     "silence_end": 0.5,
     "recording_timeout": 7,
@@ -19,5 +21,28 @@
   },
   "padatious": {
     "regex_only": false
+  },
+  "Audio": {
+    "default_backend": "vlc",
+    "backends": {
+      "OCP": {
+        "classifier_threshold": 0.4,
+        "min_score": 50,
+        "filter_media": true,
+        "filter_SEI": true,
+        "search_fallback": true,
+        "legacy_cps": false,
+        "playback_mode": 40,
+        "preferred_audio_services": ["vlc"],
+        "legacy": false,
+        "autoplay": true,
+        "disable_mpris": true,
+        "manage_external_players": true,
+      },
+      "vlc": {
+        "type": "ovos_vlc",
+        "active": true
+      }
+    }
   }
 }

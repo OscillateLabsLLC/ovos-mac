@@ -9,7 +9,7 @@ Tested on an M1 Macbook Air and an M2 Macbook Pro.
 ## Prerequisites
 
 - Homebrew
-- Python 3.10 or 3.11
+- Python 3.10-3.11
 - Poetry
 - fann2 (optional, Padatious intent engine only)
 
@@ -23,8 +23,13 @@ Set up a few minimal requirements in `~/.config/mycroft/mycroft.conf`:
 
 ```json
 {
+  // For US users, uncomment the two lines below to get Fahrenheit and 12-hour time
+  //   "system_unit": "imperial",
+  //   "time_format": "half",
   "play_wav_cmdline": "afplay %1",
   "play_mp3_cmdline": "afplay %1",
+  "enable_old_audioservice": true,
+  "disable_ocp": false,
   "listener": {
     "silence_end": 0.5,
     "recording_timeout": 7,
@@ -40,6 +45,29 @@ Set up a few minimal requirements in `~/.config/mycroft/mycroft.conf`:
   },
   "padatious": {
     "regex_only": false
+  },
+  "Audio": {
+    "default_backend": "vlc",
+    "backends": {
+      "OCP": {
+        "classifier_threshold": 0.4,
+        "min_score": 50,
+        "filter_media": true,
+        "filter_SEI": true,
+        "search_fallback": true,
+        "legacy_cps": false,
+        "playback_mode": 40,
+        "preferred_audio_services": ["vlc"],
+        "legacy": false,
+        "autoplay": true,
+        "disable_mpris": true,
+        "manage_external_players": true
+      },
+      "vlc": {
+        "type": "ovos_vlc",
+        "active": true
+      }
+    }
   }
 }
 ```
@@ -51,8 +79,6 @@ Then clone this repo, cd into the directory, and run:
 poetry install --without padatious # Or just poetry install if you want Padatious
 poetry shell
 ovos-messagebus & # Keep the message bus running in the background, no need to shut it down and spin it up each time
-ovos-dinkum-listener & # There's a known issue with the pyaudio mic plugin on Mac, so we start this manually.
-# If ovos-dinkum-listener fails, start it again until it succeeds.
 ./startup.sh
 ```
 
@@ -78,9 +104,6 @@ Once the skill is installed, stop your `startup.sh` script and start it again. S
 ## Known issues
 
 - Padatious does not install easily on M1-3 Macs
-- Sometimes afplay will clip on Macbook default speakers
-- Vosk does not install on an Apple Silicon Mac
-- pocketsphinx does not install on an Apple Silicon Mac
-- ovos-microphone-plugin-sounddevice sometimes creates very clipped recordings, so we instead use the PyAudio plugin for the listener
-- ovos-microphone-plugin-pyaudio has microphone buffer overflow issues periodically, which can be alleviated by making the `chunk_size` property obnoxiously large (16000 seems to work consistently for me when I have problems, but it means the listening sound takes forever. Just state your request right after the wakeword and it's fine)
-- The buffer overflows are sometimes caused by an iPhone connecting as a microphone. Disconnecting the iPhone usually fixes the issue.
+- Sometimes afplay will clip on Macbook default speakers if using pyaudio. Use sounddevice instead to avoid this.
+- The OVOS-supported version of pocketsphinx does not install on an Apple Silicon Mac
+- ovos-microphone-plugin-pyaudio has microphone buffer overflow issues periodically, which can be alleviated by disconnecting any extra microphones from your Mac (iPhone, webcam mic, external mic, etc.). Once ovos-dinkum-listener loads, you can reconnect the microphones and use them as normal.
