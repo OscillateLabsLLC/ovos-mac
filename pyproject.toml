@@ -9,23 +9,22 @@ packages = [{ include = "ovos_mac" }]
 
 [tool.poetry.dependencies]
 python = "^3.10,<3.12"
-ovos-dinkum-listener = { version = "^0.0.3a33", allow-prereleases = true }
-ovos-core = { git = "https://github.com/openvoiceos/ovos-core", rev = "refactor/pipeline_shutdown" }
+numpy = "<2.0"
+ovos-dinkum-listener = { version = "^0.0.3a46", allow-prereleases = true }
+ovos-core = { version = ">=0.0.8a124,<0.1.0", allow-prereleases = true }
 ovos-messagebus = { version = "^0.0.3", allow-prereleases = true }
 ovos-phal = { version = "^0.0.5a15", allow-prereleases = true }
-ovos-audio = "==0.0.2a44"
-# ovos-audio = { git = "https://github.com/openvoiceos/ovos-audio", rev = "dev" }
-ovos-plugin-manager = { version = "^0.0.26a22", allow-prereleases = true }
-ovos-utils = { git = "https://github.com/OpenVoiceOS/ovos-utils", rev = "fix/dont_lie_about_being_a_uri" }
-ovos-workshop = ">=0.0.16a7,<0.1.0"
+ovos-audio = { version = "^0.0.2a51", allow-prereleases = true }
+ovos-utils = { version = ">=0.1.0a29,<0.2.0", allow-prereleases = true }
+ovos-workshop = { version = ">=0.0.16a47,<0.1.0", allow-prereleases = true }
+ovos-plugin-manager = { version = "^0.0.26a29", allow-prereleases = true }
 tensorflow = "^2.13.0"
 tensorflow-metal = "^1.1.0"
 padatious = "^0.4.8"
 ovos-ww-plugin-precise-lite = { extras = ["full"], version = "^0.1.2" }
-ovos-ww-plugin-openwakeword = { git = "https://github.com/OpenVoiceOS/ovos-ww-plugin-openWakeWord" }
+ovos-ww-plugin-openwakeword = ">=0.4.1,<0.5.0"
 ovos-vad-plugin-silero = "^0.0.1"
 ovos-microphone-plugin-pyaudio = "^0.0.0a2"
-# ovos-microphone-plugin-sounddevice = { git = "https://github.com/OpenVoiceOS/ovos-microphone-plugin-sounddevice", rev = "dev" }
 ovos-stt-plugin-server = "0.0.4a7"
 ovos-tts-plugin-server = { version = "^0.0.2a12", allow-prereleases = true }
 neon-tts-plugin-mozilla-remote = "^1.0.0"
@@ -36,37 +35,49 @@ ovos-phal-plugin-homeassistant = { version = "^0.0.4a6", allow-prereleases = tru
 cython = "^3.0.10"
 ovos-phal-plugin-connectivity-events = { version = "^0.0.3", allow-prereleases = true }
 ovos-plugin-vlc = { version = "^0.0.2a7", allow-prereleases = true }
-ovos-bus-client = { git = "https://github.com/OpenVoiceOS/ovos-bus-client", rev = "refactor/handle_new_SEIs" }
-ovos-ocp-youtube-plugin = { git = "https://github.com/OpenVoiceOS/ovos-ocp-youtube-plugin", rev = "dev" }
-ovos-plugin-common-play = { git = "https://github.com/openvoiceos/ovos-ocp-audio-plugin", rev = "dev" }
-tutubo = { version = "^0.0.2a1.post1", allow-prereleases = true }
+# ovos-plugin-vlc = { git = "https://github.com/OpenVoiceOS/ovos-plugin-vlc", rev = "fix/playlist" }
+ovos-bus-client = { version = ">=0.0.9a29,<0.1.0", allow-prereleases = true }
+ovos-plugin-common-play = { version = ">=0.0.7a9,<0.1.0", allow-prereleases = true }
+# ovos-plugin-common-play = { git = "https://github.com/OpenVoiceOS/ovos-ocp-audio-plugin", rev = "logs/end_of_track" }
+ovos-audio-plugin-mpv = { version = "^0.0.0a4", allow-prereleases = true }
+# ovos-audio-plugin-mpv = { git = "https://github.com/OpenVoiceOS/ovos-audio-plugin-mpv", rev = "fix/end_of_track" }
+ovos-ocp-files-plugin = { version = "^0.13.1a1", allow-prereleases = true }
+ovos-ocp-rss-plugin = { version = "^0.0.3a1", allow-prereleases = true }
+ovos-ocp-m3u-plugin = { version = "^0.0.2a2", allow-prereleases = true }
+ovos-config = { version = "^0.0.13a24", allow-prereleases = true }
+ovos-diagnostics = { git = "https://github.com/TigreGotico/ovos-diagnostics" }
 
 [tool.poetry.group.skills.dependencies]
 ovos-skill-personal = "0.0.4a8"
-neon-homeassistant-skill = { git = "https://github.com/mikejgray/neon-homeassistant-skill", rev = "FEAT_Py3-12" }
+neon-homeassistant-skill = { git = "https://github.com/mikejgray/neon-homeassistant-skill", rev = "main" }
 ovos-skill-icanhazdadjokes = { git = "https://github.com/OpenVoiceOS/skill-ovos-icanhazdadjokes" }
 ovos-skill-parrot = { version = "^0.0.0", allow-prereleases = true }
 ovos-skill-weather = { version = "^0.0.1a14", allow-prereleases = true }
 ovos-skill-date-time = { version = "^0.2.2", allow-prereleases = true }
 ovos-skill-fallback-unknown = { version = ">=0.0.4a1,<1.0", allow-prereleases = true }
 ovos-skill-alerts = { version = ">=0.0.1a6", allow-prereleases = true }
-#ovos-skill-hello-world = {version = ">=0.0.4a2,<1.0", allow-prereleases = true}
 skill-wolfie = { git = "https://github.com/OpenVoiceOS/skill-ovos-wolfie/" }
-#ovos-skill-boot-finished = {git = "https://github.com/OpenVoiceOS/skill-ovos-boot-finished.git"}
-#ovos-skill-wikipedia = {git = "https://github.com/OpenVoiceOS/skill-ovos-wikipedia.git"}
+ovos-skill-boot-finished = { git = "https://github.com/OpenVoiceOS/skill-ovos-boot-finished.git" }
+ovos-skill-wikipedia = { git = "https://github.com/OpenVoiceOS/skill-ovos-wikipedia.git" }
 skill-randomness = { git = "https://github.com/OpenVoiceOS/skill-ovos-randomness" }
-skill-easter-eggs = { git = "https://github.com/OpenVoiceOS/ovos-skill-easter-eggs", rev = "dev" }
-skill-calendar = { path = "../calendar-skill" }
 ovos-skill-audio-recording = { git = "https://github.com/OpenVoiceOS/skill-ovos-audio-recording" }
-skill-plex = { git = "https://github.com/mikejgray/skill-plex", rev = "feat-minor-improvements" }
+ovos-skill-somafm = { version = "^0.0.1", allow-prereleases = true }
+skill-monster-scanner = { version = "^1.0.0", allow-prereleases = true }
+skill-easter-eggs = ">=1.0.0,<1.1.0"
 # skill-pandora-mycroft = {path = "/Users/Mike/Documents/coding/VoiceAssistants/skill-pandora-mycroft", allow-prereleases = true}
+skill-plex = {git = "https://github.com/OscillateLabsLLC/skill-plex"}
+skill-cocktail = {git = "https://github.com/oscillatelabsllc/skill-cocktail"}
+
+[tool.poetry.group.ocp_youtube.dependencies]
+tutubo = { version = "^0.0.2a1.post1", allow-prereleases = true }
+yt-dlp = { version = "^2024.7.16.232919.dev0", allow-prereleases = true }
+ovos-ocp-youtube-plugin = { version = "^0.0.2a2", allow-prereleases = true }
+# ovos-skills, best for headless but works everywhere
+ovos-skill-youtube-music = { git = "https://github.com/OpenVoiceOS/skill-ovos-youtube-music" }
 
 [tool.poetry.group.padatious.dependencies]
 fann2 = "^1.1.2"
 padatious = "^0.4.8"
-
-[tool.poetry.group.work.dependencies]
-ovos-skill-dictation = { git = "https://github.com/OpenVoiceOS/ovos-skill-dictation" }
 
 [build-system]
 requires = ["poetry-core"]
