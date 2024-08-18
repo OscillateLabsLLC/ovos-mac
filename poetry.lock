@@ -1478,7 +1478,7 @@ files = [
 
 [[package]]
 name = "neon-homeassistant-skill"
-version = "0.0.21"
+version = "0.0.22"
 description = "An OVOS/Neon.AI Skill for Home Assistant, which integrates with ovos-PHAL-plugin-homeassistant."
 optional = false
 python-versions = "^3.8"
@@ -1495,8 +1495,8 @@ test = ["neon-minerva (>=0.2.0,<0.3.0)"]
 [package.source]
 type = "git"
 url = "https://github.com/mikejgray/neon-homeassistant-skill"
-reference = "main"
-resolved_reference = "b63d1618122d099c5ba07f4efba683bca89a0f58"
+reference = "FIX_SilentEntities"
+resolved_reference = "8c8ffe6302503aea2ce3ce85c424a322df9f5ab0"
 
 [[package]]
 name = "neon-tts-plugin-mozilla-remote"
@@ -4666,4 +4666,4 @@ test = ["big-O", "importlib-resources", "jaraco.functools", "jaraco.itertools", 
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10,<3.12"
-content-hash = "791f55516ecf75dbeec8505d1f852f29d690eaacbf64bc497531040b87fed7a5"
+content-hash = "eb3e9b5b7f92f8514f5926d4e174a826ce6aebc72c4fd8f62e3adab07568ecb0"

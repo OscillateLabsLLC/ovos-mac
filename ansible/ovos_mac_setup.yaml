@@ -1,0 +1,463 @@
+---
+- name: Set up OVOS on Mac (Apple Silicon)
+  hosts: localhost
+  connection: local
+  become: no
+
+  vars:
+    ovos_config_dir: "{{ ansible_env.HOME }}/.config/mycroft"
+    ovos_log_dir: "{{ ansible_env.HOME }}/.local/state/mycroft/logs"
+    ovos_repo_url: "https://github.com/OscillateLabsLLC/ovos-mac.git"
+    ovos_repo_dest: "{{ ansible_env.HOME }}/ovos-mac"
+    python_version: "3.11"
+    homebrew_python_path: "/opt/homebrew/opt/python@{{ python_version }}/bin/python{{ python_version }}"
+    ovos_services:
+      - messagebus
+      - core
+      - audio
+      - speech
+      - phal
+      - admin-phal
+    ovos_commands:
+      core: "ovos-core"
+      audio: "ovos-audio"
+      speech: "ovos-dinkum-listener"
+      phal: "{{ ansible_env.HOME }}/ovos-mac/ovos_PHAL"
+      admin-phal: "{{ ansible_env.HOME }}/ovos-mac/ovos_PHAL"
+
+  tasks:
+    - name: Check if running on Apple Silicon
+      ansible.builtin.command: uname -m
+      register: architecture
+      changed_when: false
+
+    - name: Fail if not running on Apple Silicon
+      ansible.builtin.fail:
+        msg: "This playbook is designed for Apple Silicon Macs only. Apologies!"
+      when: architecture.stdout != "arm64"
+
+    - name: Check if Xcode CLI tools are installed
+      ansible.builtin.command: xcode-select -p
+      register: xcode_cli
+      ignore_errors: yes
+      changed_when: false
+
+    - name: Install Xcode CLI tools
+      ansible.builtin.command: xcode-select --install
+      when: xcode_cli.rc != 0
+
+    - name: Wait for Xcode CLI tools installation to complete
+      ansible.builtin.pause:
+        prompt: "Please wait for Xcode CLI tools to finish installing, then press ENTER to continue"
+      when: xcode_cli.rc != 0
+
+    - name: Ensure Homebrew is installed
+      ansible.builtin.shell: |
+        if ! command -v brew &>/dev/null; then
+          /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+        fi
+      args:
+        creates: /opt/homebrew/bin/brew
+
+    - name: Update Homebrew
+      community.general.homebrew:
+        update_homebrew: yes
+
+    - name: Install Python {{ python_version }}
+      community.general.homebrew:
+        name: "python@{{ python_version }}"
+        state: present
+
+    - name: Install pipx
+      community.general.homebrew:
+        name: pipx
+        state: present
+
+    - name: Ensure pipx is in PATH
+      ansible.builtin.lineinfile:
+        path: "{{ ansible_env.HOME }}/.zshrc"
+        line: 'export PATH="$HOME/.local/bin:$PATH"'
+        create: yes
+
+    - name: Install Poetry using pipx
+      ansible.builtin.shell: pipx install poetry
+      args:
+        creates: "{{ ansible_env.HOME }}/.local/bin/poetry"
+
+    - name: Install mpv for music/podcast playback
+      community.general.homebrew:
+        name: mpv
+        state: present
+
+    - name: Install Padatious dependencies
+      community.general.homebrew:
+        name:
+          - portaudio
+          - swig
+        state: present
+
+    - name: Install cmake
+      community.general.homebrew:
+        name: cmake
+        state: present
+
+    - name: Check if FANN is installed
+      ansible.builtin.stat:
+        path: /usr/local/lib/libdoublefann.2.dylib
+      register: fann_check
+
+    - name: Create temporary directory for FANN
+      ansible.builtin.tempfile:
+        state: directory
+        suffix: fann
+      register: fann_temp_dir
+      when: not fann_check.stat.exists
+
+    - name: Clone FANN repository
+      ansible.builtin.git:
+        repo: https://github.com/libfann/fann.git
+        dest: "{{ fann_temp_dir.path }}"
+        version: master
+      when: not fann_check.stat.exists
+
+    - name: Build and install FANN
+      ansible.builtin.shell: |
+        cmake .
+        make
+        sudo make install
+      args:
+        chdir: "{{ fann_temp_dir.path }}"
+      become: yes
+      when: not fann_check.stat.exists
+
+    - name: Clean up FANN source
+      ansible.builtin.file:
+        path: "{{ fann_temp_dir.path }}"
+        state: absent
+      become: yes
+      when: not fann_check.stat.exists
+
+    - name: Ensure OVOS config directory exists
+      ansible.builtin.file:
+        path: "{{ ovos_config_dir }}"
+        state: directory
+
+    - name: Check if mycroft.conf exists
+      ansible.builtin.stat:
+        path: "{{ ovos_config_dir }}/mycroft.conf"
+      register: mycroft_conf_check
+
+    - name: Warn about existing mycroft.conf
+      ansible.builtin.debug:
+        msg: |
+          WARNING: An existing mycroft.conf file was found.
+          If this configuration is not specifically for Mac, you may need to make some changes.
+          A Mac-specific default configuration will be created as mycroft.conf.mac for reference.
+      when: mycroft_conf_check.stat.exists
+
+    - name: Create mycroft.conf.mac with default Mac configuration
+      ansible.builtin.copy:
+        content: |
+          {
+            // For US users, uncomment the two lines below to get Fahrenheit and 12-hour time
+            //   "system_unit": "imperial",
+            //   "time_format": "half",
+            "play_wav_cmdline": "afplay %1",
+            "play_mp3_cmdline": "afplay %1",
+            "enable_old_audioservice": true,
+            "disable_ocp": false,
+            "stt": {
+              "module": "ovos-stt-plugin-chromium",
+              "fallback": { "module": "ovos-stt-plugin-server" }
+            },
+            "hotwords": {
+              "hey_mycroft_vosk": { "active": false, "listen": false },
+              "hey_mycroft_pocketsphinx": { "active": false, "listen": false }
+            },
+            "listener": {
+              "silence_end": 0.5,
+              "recording_timeout": 7,
+              "microphone": {
+                "module": "ovos-microphone-plugin-pyaudio"
+              },
+              "VAD": {
+                "module": "ovos-vad-plugin-silero",
+                "ovos-vad-plugin-silero": {
+                  "threshold": 0.5
+                }
+              }
+            },
+            "padatious": {
+              "regex_only": false
+            },
+            "intents": {
+              "pipeline": [
+                "stop_high",
+                "converse",
+                "ocp_high",
+                "padatious_high",
+                "adapt_high",
+                "ocp_medium",
+                "fallback_high",
+                "stop_medium",
+                "adapt_medium",
+                "padatious_medium",
+                "common_qa",
+                "fallback_medium"
+              ]
+            }
+          }
+        dest: "{{ ovos_config_dir }}/mycroft.conf.mac"
+
+    - name: Create mycroft.conf if it doesn't exist
+      ansible.builtin.copy:
+        src: "{{ ovos_config_dir }}/mycroft.conf.mac"
+        dest: "{{ ovos_config_dir }}/mycroft.conf"
+        remote_src: yes
+      when: not mycroft_conf_check.stat.exists
+
+    - name: Check if OVOS-Mac repository exists
+      ansible.builtin.stat:
+        path: "{{ ovos_repo_dest }}"
+      register: ovos_repo_check
+
+    - name: Clone OVOS-Mac repository
+      ansible.builtin.git:
+        repo: "{{ ovos_repo_url }}"
+        dest: "{{ ovos_repo_dest }}"
+        version: mike
+        update: no
+      when: not ovos_repo_check.stat.exists
+
+    - name: Update OVOS-Mac repository if it exists
+      ansible.builtin.git:
+        repo: "{{ ovos_repo_url }}"
+        dest: "{{ ovos_repo_dest }}"
+        version: mike
+        update: yes
+      when: ovos_repo_check.stat.exists
+
+    - name: Ensure Poetry environment uses the correct Python version
+      ansible.builtin.shell: |
+        source {{ ansible_env.HOME }}/.zshrc
+        poetry env use "{{ homebrew_python_path }}"
+      args:
+        chdir: "{{ ovos_repo_dest }}"
+        executable: /bin/zsh
+
+    - name: Install OVOS dependencies with Padatious
+      ansible.builtin.shell: |
+        source {{ ansible_env.HOME }}/.zshrc
+        poetry config virtualenvs.path {{ ovos_repo_dest }}/.venv
+        LIBRARY_PATH=/usr/local/lib poetry install --with padatious
+      args:
+        chdir: "{{ ovos_repo_dest }}"
+        executable: /bin/zsh
+
+    - name: Create symbolic link for libdoublefann
+      ansible.builtin.file:
+        src: /usr/local/lib/libdoublefann.2.dylib
+        dest: "{{ ovos_repo_dest }}/libdoublefann.2.dylib"
+        state: link
+
+    - name: Ensure OVOS logs directory exists
+      ansible.builtin.file:
+        path: "{{ ovos_log_dir }}"
+        state: directory
+        mode: "0755"
+
+    - name: Create log files for non-admin OVOS services
+      ansible.builtin.file:
+        path: "{{ ovos_log_dir }}/{{ item }}.log"
+        state: touch
+        mode: "0644"
+      loop: "{{ ovos_services | difference(['admin-phal']) }}"
+      ignore_errors: yes
+
+    - name: Create log file for admin PHAL service
+      ansible.builtin.file:
+        path: "{{ ovos_log_dir }}/admin-phal.log"
+        state: touch
+        mode: "0644"
+        owner: root
+        group: wheel
+      become: yes
+      ignore_errors: yes
+
+    - name: Fetch SHA256 checksum
+      ansible.builtin.uri:
+        url: "https://github.com/OscillateLabsLLC/ovos-rust-messagebus/releases/latest/download/ovos_messagebus-aarch64-apple-darwin.tar.gz.sha256"
+        return_content: yes
+      register: checksum_response
+
+    - name: Extract SHA256 checksum
+      ansible.builtin.set_fact:
+        file_checksum: "{{ checksum_response.content.split() | first }}"
+
+    - name: Download latest ovos_messagebus archive
+      ansible.builtin.get_url:
+        url: "https://github.com/OscillateLabsLLC/ovos-rust-messagebus/releases/latest/download/ovos_messagebus-aarch64-apple-darwin.tar.gz"
+        dest: "{{ ovos_repo_dest }}/ovos_messagebus.tar.gz"
+        checksum: "sha256:{{ file_checksum }}"
+        mode: "0644"
+
+    - name: Remove old ovos_messagebus file if it exists
+      ansible.builtin.file:
+        path: "{{ ovos_repo_dest }}/ovos_messagebus"
+        state: absent
+
+    - name: Extract ovos_messagebus binary
+      ansible.builtin.shell:
+        cmd: gunzip -c ovos_messagebus.tar.gz | tar xvf -
+        chdir: "{{ ovos_repo_dest }}"
+      args:
+        creates: "{{ ovos_repo_dest }}/ovos_messagebus-aarch64-apple-darwin"
+
+    - name: Rename extracted binary to ovos_messagebus and remove quarantine
+      ansible.builtin.shell:
+        cmd: |
+          if [ ! -f ovos_messagebus ] || [ ovos_messagebus-aarch64-apple-darwin -nt ovos_messagebus ]; then
+            mv ovos_messagebus-aarch64-apple-darwin ovos_messagebus
+          fi
+          xattr -d com.apple.quarantine ovos_messagebus 2>/dev/null || true
+        chdir: "{{ ovos_repo_dest }}"
+      args:
+        executable: /bin/bash
+
+    - name: Ensure ovos_messagebus binary has correct permissions
+      ansible.builtin.file:
+        path: "{{ ovos_repo_dest }}/ovos_messagebus"
+        mode: "0755"
+
+    - name: Remove the tar.gz file
+      ansible.builtin.file:
+        path: "{{ ovos_repo_dest }}/ovos_messagebus.tar.gz"
+        state: absent
+
+    - name: Create launchd service file for ovos-messagebus
+      ansible.builtin.template:
+        src: ovos.messagebus.service.plist.j2
+        dest: "~/Library/LaunchAgents/com.ovos.messagebus.plist"
+
+    - name: Create launchd service files for non-root services
+      ansible.builtin.template:
+        src: ovos.service.plist.j2
+        dest: "~/Library/LaunchAgents/com.ovos.{{ item }}.plist"
+      loop: "{{ ovos_services | difference(['admin-phal', 'messagebus']) }}"
+
+    - name: Create launchd service file for admin-phal (root service)
+      ansible.builtin.template:
+        src: ovos.admin-phal.service.plist.j2
+        dest: "/Library/LaunchDaemons/com.ovos.admin-phal.plist"
+      become: yes
+
+    - name: Set correct permissions for admin-phal plist
+      ansible.builtin.file:
+        path: "/Library/LaunchDaemons/com.ovos.admin-phal.plist"
+        owner: root
+        group: wheel
+        mode: "0644"
+      become: yes
+
+    - name: Ensure OVOS_PHAL_admin script is executable
+      ansible.builtin.file:
+        path: "{{ ovos_repo_dest }}/ovos_PHAL_admin"
+        mode: "0755"
+
+    - name: Unload existing OVOS launchd services (non-root)
+      ansible.builtin.shell: launchctl unload ~/Library/LaunchAgents/com.ovos.{{ item }}.plist
+      loop: "{{ ovos_services | difference(['admin-phal']) }}"
+      ignore_errors: yes
+
+    - name: Unload existing OVOS admin-phal service (root)
+      ansible.builtin.shell: sudo launchctl unload /Library/LaunchDaemons/com.ovos.admin-phal.plist
+      ignore_errors: yes
+
+    - name: Load OVOS launchd services (non-root)
+      ansible.builtin.shell: launchctl load ~/Library/LaunchAgents/com.ovos.{{ item }}.plist
+      loop: "{{ ovos_services | difference(['admin-phal']) }}"
+      ignore_errors: yes
+
+    - name: Load OVOS admin-phal service (root)
+      ansible.builtin.shell: sudo launchctl load /Library/LaunchDaemons/com.ovos.admin-phal.plist
+      ignore_errors: yes
+
+    - name: Verify OVOS services are loaded
+      ansible.builtin.shell: launchctl list | grep com.ovos
+      register: loaded_services
+      changed_when: false
+
+    - name: Display loaded services
+      ansible.builtin.debug:
+        var: loaded_services.stdout_lines
+
+    - name: Add OVOS service helpers, extended globbing, and log alias to .zshrc
+      ansible.builtin.blockinfile:
+        path: "{{ ansible_env.HOME }}/.zshrc"
+        block: |
+          # OVOS settings and helpers
+          setopt extended_glob
+
+          # OVOS service management functions
+          ovos_service_action() {
+            local action=$1
+            local service=$2
+            local plist_path="$HOME/Library/LaunchAgents/com.ovos.$service.plist"
+
+            if [[ ! -f $plist_path ]]; then
+              echo "Error: Service '$service' does not exist."
+              return 1
+            fi
+
+            case $action in
+              start)
+                launchctl load $plist_path
+                ;;
+              stop)
+                launchctl unload $plist_path
+                ;;
+              restart)
+                launchctl unload $plist_path
+                launchctl load $plist_path
+                ;;
+              *)
+                echo "Error: Invalid action '$action'"
+                return 1
+                ;;
+            esac
+          }
+
+          ovos-start() {
+            ovos_service_action "start" $1
+          }
+
+          ovos-stop() {
+            ovos_service_action "stop" $1
+          }
+
+          ovos-restart() {
+            ovos_service_action "restart" $1
+          }
+
+          ovos-status() {
+            launchctl list | grep com.ovos
+          }
+
+          # OVOS log tailing alias
+          alias ologs='tail -f {{ ovos_log_dir }}/^messagebus.(log|err)(.)'
+        marker: "# {mark} ANSIBLE MANAGED BLOCK - OVOS SETTINGS AND HELPERS"
+
+    - name: Clean up FANN source
+      ansible.builtin.file:
+        path: "{{ ansible_env.HOME }}/fann"
+        state: absent
+      when: not fann_check.stat.exists
+
+    - name: Clean up Homebrew cache
+      ansible.builtin.shell: |
+        brew cleanup
+        brew cleanup --prune=all
+      args:
+        executable: /bin/zsh
+      register: brew_cleanup
+      changed_when: brew_cleanup.stdout != ""

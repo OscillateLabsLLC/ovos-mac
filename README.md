@@ -95,6 +95,16 @@ ln -s /usr/local/lib/libdoublefann.2.dylib .
 
 `fann` is also available on Homebrew but I haven't tested using it. If you want to try it, run `brew install fann` instead of building it from source. Feel free to PR any changes you need to make to the above instructions.
 
+## Viewing Logs
+
+To view OVOS logs (excluding messagebus):
+
+```sh
+ologs
+```
+
+This will tail the log files located in `~/.local/state/mycroft/logs/`.
+
 ## Adding skills
 
 OVOS skills are just Python packages, so you can simply run `poetry add my-skill` to add a skill to your environment. You can also clone a skill repo and add it to your environment with `poetry add /path/to/my-skill`. Finally, you can also add a skill from a git repo with `poetry add git+https://my-skill/repo.git`.

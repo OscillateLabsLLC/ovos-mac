@@ -6,6 +6,14 @@
   "play_mp3_cmdline": "afplay %1",
   "enable_old_audioservice": true,
   "disable_ocp": false,
+  "stt": {
+    "module": "ovos-stt-plugin-chromium",
+    "fallback": { "module": "ovos-stt-plugin-server" }
+  },
+  "hotwords": {
+    "hey_mycroft_vosk": { "active": false, "listen": false },
+    "hey_mycroft_pocketsphinx": { "active": false, "listen": false }
+  },
   "listener": {
     "silence_end": 0.5,
     "recording_timeout": 7,
@@ -22,27 +30,20 @@
   "padatious": {
     "regex_only": false
   },
-  "Audio": {
-    "default_backend": "vlc",
-    "backends": {
-      "OCP": {
-        "classifier_threshold": 0.4,
-        "min_score": 50,
-        "filter_media": true,
-        "filter_SEI": true,
-        "search_fallback": true,
-        "legacy_cps": false,
-        "playback_mode": 40,
-        "preferred_audio_services": ["vlc"],
-        "legacy": false,
-        "autoplay": true,
-        "disable_mpris": true,
-        "manage_external_players": true,
-      },
-      "vlc": {
-        "type": "ovos_vlc",
-        "active": true
-      }
-    }
+  "intents": {
+    "pipeline": [
+      "stop_high",
+      "converse",
+      "ocp_high",
+      "padatious_high",
+      "adapt_high",
+      "ocp_medium",
+      "fallback_high",
+      "stop_medium",
+      "adapt_medium",
+      "padatious_medium",
+      "common_qa",
+      "fallback_medium"
+    ]
   }
 }

@@ -46,10 +46,11 @@ ovos-ocp-rss-plugin = { version = "^0.0.3a1", allow-prereleases = true }
 ovos-ocp-m3u-plugin = { version = "^0.0.2a2", allow-prereleases = true }
 ovos-config = { version = "^0.0.13a24", allow-prereleases = true }
 ovos-diagnostics = { git = "https://github.com/TigreGotico/ovos-diagnostics" }
+neon-homeassistant-skill = { git = "https://github.com/mikejgray/neon-homeassistant-skill", rev = "FIX_SilentEntities" }
 
 [tool.poetry.group.skills.dependencies]
 ovos-skill-personal = "0.0.4a8"
-neon-homeassistant-skill = { git = "https://github.com/mikejgray/neon-homeassistant-skill", rev = "main" }
+# neon-homeassistant-skill = { git = "https://github.com/mikejgray/neon-homeassistant-skill", rev = "main" }
 ovos-skill-icanhazdadjokes = { git = "https://github.com/OpenVoiceOS/skill-ovos-icanhazdadjokes" }
 ovos-skill-parrot = { version = "^0.0.0", allow-prereleases = true }
 ovos-skill-weather = { version = "^0.0.1a14", allow-prereleases = true }
@@ -65,8 +66,8 @@ ovos-skill-somafm = { version = "^0.0.1", allow-prereleases = true }
 skill-monster-scanner = { version = "^1.0.0", allow-prereleases = true }
 skill-easter-eggs = ">=1.0.0,<1.1.0"
 # skill-pandora-mycroft = {path = "/Users/Mike/Documents/coding/VoiceAssistants/skill-pandora-mycroft", allow-prereleases = true}
-skill-plex = {git = "https://github.com/OscillateLabsLLC/skill-plex"}
-skill-cocktail = {git = "https://github.com/oscillatelabsllc/skill-cocktail"}
+skill-plex = { git = "https://github.com/OscillateLabsLLC/skill-plex" }
+skill-cocktail = { git = "https://github.com/oscillatelabsllc/skill-cocktail" }
 
 [tool.poetry.group.ocp_youtube.dependencies]
 tutubo = { version = "^0.0.2a1.post1", allow-prereleases = true }

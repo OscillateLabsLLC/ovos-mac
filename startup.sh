@@ -20,8 +20,8 @@ ovos-audio &
 ovos_audio_pid=$!
 ovos-core &
 ovos_core_pid=$!
-# sudo ./ovos_PHAL_admin &
-# ovos_phal_admin_pid=$!
+sudo ./ovos_PHAL_admin &
+ovos_phal_admin_pid=$!
 # ovos-media &
 # ovos_media_pid=$!
 
