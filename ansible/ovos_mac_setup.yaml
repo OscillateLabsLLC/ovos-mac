@@ -229,12 +229,18 @@
         update: no
       when: not ovos_repo_check.stat.exists
 
+    - name: Stash any user changes to OVOS-Mac repository
+      ansible.builtin.shell: |
+        git -C {{ ovos_repo_dest }} stash
+      when: ovos_repo_check.stat.exists
+
     - name: Update OVOS-Mac repository if it exists
       ansible.builtin.git:
         repo: "{{ ovos_repo_url }}"
         dest: "{{ ovos_repo_dest }}"
         version: mike
         update: yes
+        force: true
       when: ovos_repo_check.stat.exists
 
     - name: Ensure Poetry environment uses the correct Python version
@@ -259,6 +265,12 @@
         src: /usr/local/lib/libdoublefann.2.dylib
         dest: "{{ ovos_repo_dest }}/libdoublefann.2.dylib"
         state: link
+
+    - name: Create sudoers file for user (necessary for ovos-phal-plugin-mac)
+      ansible.builtin.template:
+        src: sudoers.j2
+        dest: "/private/etc/sudoers.d/{{ ansible_env.USER }}"
+      become: yes
 
     - name: Ensure OVOS logs directory exists
       ansible.builtin.file:

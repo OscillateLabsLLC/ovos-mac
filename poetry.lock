@@ -794,6 +794,7 @@ description = "Python AST that abstracts the underlying Python version"
 optional = false
 python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,>=2.7"
 files = [
+    {file = "gast-0.6.0-py3-none-any.whl", hash = "sha256:52b182313f7330389f72b069ba00f174cfe2a06411099547288839c6cbafbd54"},
     {file = "gast-0.6.0.tar.gz", hash = "sha256:88fc5300d32c7ac6ca7b515310862f71e6fdf2c029bbec7c66c0f5dd47b6b1fb"},
 ]
 
@@ -1096,6 +1097,7 @@ description = "Clang Python Bindings, mirrored from the official LLVM repo: http
 optional = false
 python-versions = "*"
 files = [
+    {file = "libclang-18.1.1-1-py2.py3-none-macosx_11_0_arm64.whl", hash = "sha256:0b2e143f0fac830156feb56f9231ff8338c20aecfe72b4ffe96f19e5a1dbb69a"},
     {file = "libclang-18.1.1-py2.py3-none-macosx_10_9_x86_64.whl", hash = "sha256:6f14c3f194704e5d09769108f03185fce7acaf1d1ae4bbb2f30a72c2400cb7c5"},
     {file = "libclang-18.1.1-py2.py3-none-macosx_11_0_arm64.whl", hash = "sha256:83ce5045d101b669ac38e6da8e58765f12da2d3aafb3b9b98d88b286a60964d8"},
     {file = "libclang-18.1.1-py2.py3-none-manylinux2010_x86_64.whl", hash = "sha256:c533091d8a3bbf7460a00cb6c1a71da93bffe148f172c7d03b1c31fbf8aa2a0b"},
@@ -1188,9 +1190,13 @@ files = [
     {file = "lxml-5.2.2-cp36-cp36m-win_amd64.whl", hash = "sha256:edcfa83e03370032a489430215c1e7783128808fd3e2e0a3225deee278585196"},
     {file = "lxml-5.2.2-cp37-cp37m-macosx_10_9_x86_64.whl", hash = "sha256:28bf95177400066596cdbcfc933312493799382879da504633d16cf60bba735b"},
     {file = "lxml-5.2.2-cp37-cp37m-manylinux_2_12_i686.manylinux2010_i686.manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:3a745cc98d504d5bd2c19b10c79c61c7c3df9222629f1b6210c0368177589fb8"},
+    {file = "lxml-5.2.2-cp37-cp37m-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:1b590b39ef90c6b22ec0be925b211298e810b4856909c8ca60d27ffbca6c12e6"},
     {file = "lxml-5.2.2-cp37-cp37m-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:b336b0416828022bfd5a2e3083e7f5ba54b96242159f83c7e3eebaec752f1716"},
+    {file = "lxml-5.2.2-cp37-cp37m-manylinux_2_28_aarch64.whl", hash = "sha256:c2faf60c583af0d135e853c86ac2735ce178f0e338a3c7f9ae8f622fd2eb788c"},
     {file = "lxml-5.2.2-cp37-cp37m-manylinux_2_28_x86_64.whl", hash = "sha256:4bc6cb140a7a0ad1f7bc37e018d0ed690b7b6520ade518285dc3171f7a117905"},
+    {file = "lxml-5.2.2-cp37-cp37m-musllinux_1_1_aarch64.whl", hash = "sha256:7ff762670cada8e05b32bf1e4dc50b140790909caa8303cfddc4d702b71ea184"},
     {file = "lxml-5.2.2-cp37-cp37m-musllinux_1_1_x86_64.whl", hash = "sha256:57f0a0bbc9868e10ebe874e9f129d2917750adf008fe7b9c1598c0fbbfdde6a6"},
+    {file = "lxml-5.2.2-cp37-cp37m-musllinux_1_2_aarch64.whl", hash = "sha256:a6d2092797b388342c1bc932077ad232f914351932353e2e8706851c870bca1f"},
     {file = "lxml-5.2.2-cp37-cp37m-musllinux_1_2_x86_64.whl", hash = "sha256:60499fe961b21264e17a471ec296dcbf4365fbea611bf9e303ab69db7159ce61"},
     {file = "lxml-5.2.2-cp37-cp37m-win32.whl", hash = "sha256:d9b342c76003c6b9336a80efcc766748a333573abf9350f4094ee46b006ec18f"},
     {file = "lxml-5.2.2-cp37-cp37m-win_amd64.whl", hash = "sha256:b16db2770517b8799c79aa80f4053cd6f8b716f21f8aca962725a9565ce3ee40"},
@@ -1819,6 +1825,8 @@ files = [
     {file = "orjson-3.10.6-cp312-cp312-musllinux_1_2_x86_64.whl", hash = "sha256:960db0e31c4e52fa0fc3ecbaea5b2d3b58f379e32a95ae6b0ebeaa25b93dfd34"},
     {file = "orjson-3.10.6-cp312-none-win32.whl", hash = "sha256:a6ea7afb5b30b2317e0bee03c8d34c8181bc5a36f2afd4d0952f378972c4efd5"},
     {file = "orjson-3.10.6-cp312-none-win_amd64.whl", hash = "sha256:874ce88264b7e655dde4aeaacdc8fd772a7962faadfb41abe63e2a4861abc3dc"},
+    {file = "orjson-3.10.6-cp313-none-win32.whl", hash = "sha256:efdf2c5cde290ae6b83095f03119bdc00303d7a03b42b16c54517baa3c4ca3d0"},
+    {file = "orjson-3.10.6-cp313-none-win_amd64.whl", hash = "sha256:8e190fe7888e2e4392f52cafb9626113ba135ef53aacc65cd13109eb9746c43e"},
     {file = "orjson-3.10.6-cp38-cp38-macosx_10_15_x86_64.macosx_11_0_arm64.macosx_10_15_universal2.whl", hash = "sha256:66680eae4c4e7fc193d91cfc1353ad6d01b4801ae9b5314f17e11ba55e934183"},
     {file = "orjson-3.10.6-cp38-cp38-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:caff75b425db5ef8e8f23af93c80f072f97b4fb3afd4af44482905c9f588da28"},
     {file = "orjson-3.10.6-cp38-cp38-manylinux_2_17_armv7l.manylinux2014_armv7l.whl", hash = "sha256:3722fddb821b6036fd2a3c814f6bd9b57a89dc6337b9924ecd614ebce3271394"},
@@ -2229,6 +2237,30 @@ ovos-plugin-manager = ">=0.0,<1.0"
 requests = "*"
 
 [[package]]
+name = "ovos-phal-plugin-mac"
+version = "0.0.1"
+description = ""
+optional = false
+python-versions = "*"
+files = []
+develop = false
+
+[package.dependencies]
+ovos-bus-client = "*"
+ovos-plugin-manager = "*"
+ovos-utils = "*"
+ovos-workshop = "*"
+
+[package.extras]
+test = ["pytest", "pytest-cov"]
+
+[package.source]
+type = "git"
+url = "https://github.com/OscillateLabsLLC/ovos-phal-plugin-mac"
+reference = "dev"
+resolved_reference = "851c2edc7d0cd6584a663d4dd0a022b8cb38c70d"
+
+[[package]]
 name = "ovos-phal-plugin-oauth"
 version = "0.0.3a3"
 description = "A plugin for OpenVoiceOS hardware abstraction layer"
@@ -2449,6 +2481,20 @@ ovos-plugin-common-play = ">=0.0.3,<1.0"
 ovos-utils = ">=0.0.28,<1.0"
 ovos-workshop = ">=0.0.11,<1.0"
 radiosoma = ">=0.0.1,<1.0"
+
+[[package]]
+name = "ovos-skill-volume"
+version = "0.0.2a10"
+description = "ovos skill plugin"
+optional = false
+python-versions = "*"
+files = [
+    {file = "ovos_skill_volume-0.0.2a10-py3-none-any.whl", hash = "sha256:13f7d342e2f6bd3a03a96a0fb5bce854c02b4fa90a25cd1015f033b766b7ab72"},
+]
+
+[package.dependencies]
+ovos-utils = ">=0.0.38,<1.0"
+ovos-workshop = ">=0.0.15,<1.0"
 
 [[package]]
 name = "ovos-skill-weather"
@@ -3221,8 +3267,12 @@ description = "quebra_frases chunks strings into byte sized pieces"
 optional = false
 python-versions = "*"
 files = [
+    {file = "quebra_frases-0.3.7-py3-none-any.whl", hash = "sha256:743f993b67777a1ddcdb9d8ad362367b24e2e1b716028d4e4c69770c614ac45a"},
     {file = "quebra_frases-0.3.7.tar.gz", hash = "sha256:ec839ce8825a50ac671d2dff09f1a8563d1686f4954924ad0c6e3cde8e277ed0"},
 ]
+
+[package.dependencies]
+regex = "*"
 
 [[package]]
 name = "radiosoma"
@@ -4666,4 +4716,4 @@ test = ["big-O", "importlib-resources", "jaraco.functools", "jaraco.itertools", 
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10,<3.12"
-content-hash = "eb3e9b5b7f92f8514f5926d4e174a826ce6aebc72c4fd8f62e3adab07568ecb0"
+content-hash = "b86060d6d8f423c6c517d08008f3d03f54dd8ab0d538f415c306b5ae14d22da2"
