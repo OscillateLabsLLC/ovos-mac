@@ -1,5 +1,5 @@
 ---
-- name: Set up OVOS on Mac (Apple Silicon)
+- name: Set up OVOS on Mac (Intel and Apple Silicon)
   hosts: localhost
   connection: local
   become: no
@@ -10,7 +10,6 @@
     ovos_repo_url: "https://github.com/OscillateLabsLLC/ovos-mac.git"
     ovos_repo_dest: "{{ ansible_env.HOME }}/ovos-mac"
     python_version: "3.11"
-    homebrew_python_path: "/opt/homebrew/opt/python@{{ python_version }}/bin/python{{ python_version }}"
     ovos_services:
       - messagebus
       - core
@@ -26,15 +25,20 @@
       admin-phal: "{{ ansible_env.HOME }}/ovos-mac/ovos_PHAL"
 
   tasks:
-    - name: Check if running on Apple Silicon
+    - name: Detect Mac architecture
       ansible.builtin.command: uname -m
       register: architecture
       changed_when: false
 
-    - name: Fail if not running on Apple Silicon
-      ansible.builtin.fail:
-        msg: "This playbook is designed for Apple Silicon Macs only. Apologies!"
-      when: architecture.stdout != "arm64"
+    - name: Set architecture-specific variables
+      ansible.builtin.set_fact:
+        is_apple_silicon: "{{ architecture.stdout == 'arm64' }}"
+        homebrew_path: "{{ '/opt/homebrew' if architecture.stdout == 'arm64' else '/usr/local' }}"
+        ovos_messagebus_arch: "{{ 'aarch64' if architecture.stdout == 'arm64' else 'x86_64' }}"
+
+    - name: Set homebrew Python path
+      ansible.builtin.set_fact:
+        homebrew_python_path: "{{ homebrew_path }}/opt/python@{{ python_version }}/bin/python{{ python_version }}"
 
     - name: Check if Xcode CLI tools are installed
       ansible.builtin.command: xcode-select -p
@@ -57,7 +61,7 @@
           /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
         fi
       args:
-        creates: /opt/homebrew/bin/brew
+        creates: "{{ homebrew_path }}/bin/brew"
 
     - name: Update Homebrew
       community.general.homebrew:
@@ -296,9 +300,13 @@
       become: yes
       ignore_errors: yes
 
+    - name: Set messagebus architecture
+      ansible.builtin.set_fact:
+        ovos_messagebus_arch: "{{ 'aarch64' if is_apple_silicon else 'x86_64' }}"
+
     - name: Fetch SHA256 checksum
       ansible.builtin.uri:
-        url: "https://github.com/OscillateLabsLLC/ovos-rust-messagebus/releases/latest/download/ovos_messagebus-aarch64-apple-darwin.tar.gz.sha256"
+        url: "https://github.com/OscillateLabsLLC/ovos-rust-messagebus/releases/latest/download/ovos_messagebus-{{ ovos_messagebus_arch }}-apple-darwin.tar.gz.sha256"
         return_content: yes
       register: checksum_response
 
@@ -308,7 +316,7 @@
 
     - name: Download latest ovos_messagebus archive
       ansible.builtin.get_url:
-        url: "https://github.com/OscillateLabsLLC/ovos-rust-messagebus/releases/latest/download/ovos_messagebus-aarch64-apple-darwin.tar.gz"
+        url: "https://github.com/OscillateLabsLLC/ovos-rust-messagebus/releases/latest/download/ovos_messagebus-{{ ovos_messagebus_arch }}-apple-darwin.tar.gz"
         dest: "{{ ovos_repo_dest }}/ovos_messagebus.tar.gz"
         checksum: "sha256:{{ file_checksum }}"
         mode: "0644"
@@ -320,21 +328,15 @@
 
     - name: Extract ovos_messagebus binary
       ansible.builtin.shell:
-        cmd: gunzip -c ovos_messagebus.tar.gz | tar xvf -
+        cmd: tar -xzf ovos_messagebus.tar.gz
         chdir: "{{ ovos_repo_dest }}"
-      args:
-        creates: "{{ ovos_repo_dest }}/ovos_messagebus-aarch64-apple-darwin"
 
     - name: Rename extracted binary to ovos_messagebus and remove quarantine
       ansible.builtin.shell:
         cmd: |
-          if [ ! -f ovos_messagebus ] || [ ovos_messagebus-aarch64-apple-darwin -nt ovos_messagebus ]; then
-            mv ovos_messagebus-aarch64-apple-darwin ovos_messagebus
-          fi
+          mv ovos_messagebus-{{ ovos_messagebus_arch }}-apple-darwin ovos_messagebus
           xattr -d com.apple.quarantine ovos_messagebus 2>/dev/null || true
         chdir: "{{ ovos_repo_dest }}"
-      args:
-        executable: /bin/bash
 
     - name: Ensure ovos_messagebus binary has correct permissions
       ansible.builtin.file:
