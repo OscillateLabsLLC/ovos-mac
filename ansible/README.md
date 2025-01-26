@@ -32,7 +32,7 @@ This Ansible playbook automates the setup of OpenVoiceOS (OVOS) on macOS, specif
 
 ## What This Playbook Does
 
-- Installs and configures necessary tools (Homebrew, Python, Poetry, etc.)
+- Installs and configures necessary tools (Homebrew, Python, UV, etc.)
 - Sets up OVOS and its dependencies
 - Configures OVOS services to run on macOS
 - Adds convenient command aliases for OVOS management
@@ -60,6 +60,7 @@ To run the playbook step-by-step and validate each task:
    ```
 
 4. To run specific tagged tasks:
+
    ```sh
    ansible-playbook ovos_mac_setup.yml --tags "tag_name"
    ```
@@ -70,11 +71,11 @@ After running the playbook, verify the installation:
 
 1. Check Homebrew: `brew --version`
 2. Verify Python: `python3 --version`
-3. Check Poetry: `poetry --version`
+3. Check UV: `uv --version`
 4. Verify OVOS:
    ```sh
    cd ~/ovos-mac
-   poetry run ovos-messagebus --version
+   uv run ovos-messagebus --version
    ```
 5. Check OVOS config: `cat ~/.config/mycroft/mycroft.conf`
 6. Verify FANN: `ls /usr/local/lib/libdoublefann*`
@@ -103,7 +104,7 @@ For running assistant issues:
 
 1. Check service status: `launchctl list | grep ovos`
 2. View logs: `tail -f ~/.local/state/mycroft/logs/<service_name>.log`
-3. Start a service manually: `~/ovos-mac/poetry run <service_command>`
+3. Start a service manually: `~/ovos-mac/uv run <service_command>`
 4. Ensure proper microphone and speaker configuration
 5. Try restarting your computer and OVOS services
 
@@ -111,17 +112,17 @@ For running assistant issues:
 
 To add a skill:
 
-1. Activate the Poetry environment:
+1. Activate the virtual environment:
 
    ```sh
    cd ~/ovos-mac
-   poetry shell
+   source .venv/bin/activate
    ```
 
 2. Install the skill:
 
    ```sh
-   poetry add <skill-name>
+   uv add <skill-name>
    ```
 
 3. Restart the OVOS core service:

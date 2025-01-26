@@ -1,87 +1,194 @@
-[tool.poetry]
+[project]
+authors = [{ "name" = "Mike Gray", "email" = "mike@graywind.org" }]
 name = "ovos-mac"
 version = "0.1.0"
 description = "Necessary packages for running OVOS natively on Mac OS!"
-authors = ["Mike Gray <mike@graywind.org>"]
-license = "Apache-2.0"
+license = { text = "Apache-2.0" }
 readme = "README.md"
-packages = [{ include = "ovos_mac" }]
+requires-python = "~=3.10"
+dependencies = [
+    "ovos-adapt-parser==1.0.5",
+    "ovos-audio>=0.3.1",
+    "ovos-audio-plugin-mpv==0.2.1",
+    "ovos-backend-client==1.0.1",
+    "ovos-bus-client>=1.1.0",
+    "ovos-classifiers~=0.0.0a59",
+    "ovos-common-query-pipeline-plugin==1.1.0",
+    "ovos-config<1.0.0",
+    "ovos-core==0.3.8",
+    "ovos-date-parser==0.4.0",
+    "ovos-dinkum-listener==0.3.4",
+    "ovos-lingua-franca==0.4.7",
+    "ovos-microphone-plugin-pyaudio==0.0.0a2",
+    "ovos-number-parser==0.0.2",
+    "ovos-ocp-pipeline-plugin==1.1.7",
+    "ovos-padatious==1.3.3",
+    "ovos-phal-plugin-homeassistant==0.0.4a11",
+    "ovos-phal==0.2.7",
+    "ovos-phal-plugin-connectivity-events==0.1.1",
+    "ovos-phal-plugin-ipgeo==0.1.2",
+    "ovos-phal-plugin-mac==0.1.0",
+    "ovos-phal-plugin-oauth>=0.0.2",
+    "ovos-plugin-common-play>=1.1.9",
+    "ovos-plugin-manager>=0.7.0",
+    "ovos-skill-alerts==0.1.15",
+    "ovos-skill-date-time==0.4.6",
+    "ovos-skill-days-in-history==0.3.9",
+    "ovos-skill-fallback-unknown==0.1.5",
+    "ovos-skill-hello-world==0.1.10",
+    "ovos-skill-icanhazdadjokes==0.3.2",
+    "ovos-skill-ip==0.2.6",
+    "ovos-skill-personal==0.1.9",
+    "ovos-skill-randomness==0.1.1",
+    "ovos-skill-speedtest==0.3.2",
+    "ovos-skill-spelling==0.2.5",
+    "ovos-skill-volume==0.1.12",
+    "ovos-skill-weather==0.1.14",
+    "ovos-skill-wikihow==0.2.15",
+    "ovos-skill-wikipedia==0.5.15",
+    "ovos-solver-openai-persona-plugin==1.1.0",
+    "ovos-solver-yes-no-plugin>=0.1.0",
+    "ovos-stt-plugin-server==0.1.0",
+    "ovos-translate-server-plugin==0.0.2",
+    "ovos-tts-plugin-server==0.0.2",
+    "ovos-utils>=0.6.0",
+    "ovos-utterance-normalizer==0.2.1",
+    "ovos-vad-plugin-silero==0.0.2",
+    "ovos-workshop>=1.0.0",
+    "ovos-ww-plugin-openwakeword>=0.4.1",
+    "ovos-ww-plugin-precise-lite[full]>=0.1.3",
+    "padatious==0.4.8",
+    "quebra-frases==0.3.7",
+    "setuptools==75.8.0",
+    "skill-ddg==0.1.15",
+    "skill-easter-eggs>=0.1.1",
+    "skill-monster-scanner==1.0.1",
+    "skill-wolfie>=0.2.15",
+    "tensorflow==2.17.0",
+    # "tensorflow-metal==1.1.0",
+    "tflite==2.10.0",
+    "tts-plugin-mozilla-remote==2.0.2",
+    "watchdog>=2.1",
+    "neon-homeassistant-skill",
+    "skill-plex",
+]
 
-[tool.poetry.dependencies]
-python = "^3.10,<3.12"
-numpy = "<2.0"
-ovos-dinkum-listener = { version = "^0.0.3a46", allow-prereleases = true }
-ovos-core = { version = ">=0.0.8a124,<0.1.0", allow-prereleases = true }
-ovos-messagebus = { version = "^0.0.3", allow-prereleases = true }
-ovos-phal = { version = "^0.0.5a15", allow-prereleases = true }
-ovos-audio = { version = "^0.0.2a51", allow-prereleases = true }
-ovos-utils = { version = ">=0.1.0a29,<0.2.0", allow-prereleases = true }
-ovos-workshop = { version = ">=0.0.16a47,<0.1.0", allow-prereleases = true }
-ovos-plugin-manager = { version = "^0.0.26a29", allow-prereleases = true }
-tensorflow = "^2.13.0"
-tensorflow-metal = "^1.1.0"
-padatious = "^0.4.8"
-ovos-ww-plugin-precise-lite = { extras = ["full"], version = "^0.1.2" }
-ovos-ww-plugin-openwakeword = ">=0.4.1,<0.5.0"
-ovos-vad-plugin-silero = "^0.0.1"
-ovos-microphone-plugin-pyaudio = "^0.0.0a2"
-ovos-stt-plugin-server = "0.0.4a7"
-ovos-tts-plugin-server = { version = "^0.0.2a12", allow-prereleases = true }
-neon-tts-plugin-mozilla-remote = "^1.0.0"
-# ovos-tts-plugin-edge-tts = { git = "https://github.com/OpenVoiceOS/ovos-tts-plugin-edge-tts" }
-ovos-stt-plugin-chromium = { git = "https://github.com/OpenVoiceOS/ovos-stt-plugin-chromium" }
-ovos-phal-plugin-ipgeo = "^0.0.2"
-ovos-phal-plugin-homeassistant = { version = "^0.0.4a6", allow-prereleases = true }
-cython = "^3.0.10"
-ovos-phal-plugin-connectivity-events = { version = "^0.0.3", allow-prereleases = true }
-ovos-plugin-vlc = { version = "^0.0.2a7", allow-prereleases = true }
-# ovos-plugin-vlc = { git = "https://github.com/OpenVoiceOS/ovos-plugin-vlc", rev = "fix/playlist" }
-ovos-bus-client = { version = ">=0.0.9a29,<0.1.0", allow-prereleases = true }
-ovos-plugin-common-play = { version = ">=0.0.7a9,<0.1.0", allow-prereleases = true }
-# ovos-plugin-common-play = { git = "https://github.com/OpenVoiceOS/ovos-ocp-audio-plugin", rev = "logs/end_of_track" }
-ovos-audio-plugin-mpv = { version = "^0.0.0a4", allow-prereleases = true }
-# ovos-audio-plugin-mpv = { git = "https://github.com/OpenVoiceOS/ovos-audio-plugin-mpv", rev = "fix/end_of_track" }
-ovos-ocp-files-plugin = { version = "^0.13.1a1", allow-prereleases = true }
-ovos-ocp-rss-plugin = { version = "^0.0.3a1", allow-prereleases = true }
-ovos-ocp-m3u-plugin = { version = "^0.0.2a2", allow-prereleases = true }
-ovos-config = { version = "^0.0.13a24", allow-prereleases = true }
-ovos-diagnostics = { git = "https://github.com/TigreGotico/ovos-diagnostics" }
-neon-homeassistant-skill = { git = "https://github.com/mikejgray/neon-homeassistant-skill", rev = "FIX_SilentEntities" }
-ovos-phal-plugin-mac = {git = "https://github.com/OscillateLabsLLC/ovos-phal-plugin-mac", rev = "dev"}
+[tool.setuptools]
+package-dir = { "ovos-mac" = "ovos_mac" }
+packages = ["ovos_mac"]
+include-package-data = true
 
-[tool.poetry.group.skills.dependencies]
-ovos-skill-personal = "0.0.4a8"
-# neon-homeassistant-skill = { git = "https://github.com/mikejgray/neon-homeassistant-skill", rev = "main" }
-ovos-skill-icanhazdadjokes = { git = "https://github.com/OpenVoiceOS/skill-ovos-icanhazdadjokes" }
-ovos-skill-parrot = { version = "^0.0.0", allow-prereleases = true }
-ovos-skill-weather = { version = "^0.0.1a14", allow-prereleases = true }
-ovos-skill-date-time = { version = "^0.2.2", allow-prereleases = true }
-ovos-skill-fallback-unknown = { version = ">=0.0.4a1,<1.0", allow-prereleases = true }
-ovos-skill-alerts = { version = ">=0.0.1a6", allow-prereleases = true }
-skill-wolfie = { git = "https://github.com/OpenVoiceOS/skill-ovos-wolfie/" }
-ovos-skill-boot-finished = { git = "https://github.com/OpenVoiceOS/skill-ovos-boot-finished.git" }
-ovos-skill-wikipedia = { git = "https://github.com/OpenVoiceOS/skill-ovos-wikipedia.git" }
-skill-randomness = { git = "https://github.com/OpenVoiceOS/skill-ovos-randomness" }
-ovos-skill-audio-recording = { git = "https://github.com/OpenVoiceOS/skill-ovos-audio-recording" }
-ovos-skill-somafm = { version = "^0.0.1", allow-prereleases = true }
-skill-monster-scanner = { version = "^1.0.0", allow-prereleases = true }
-skill-easter-eggs = ">=1.0.0,<1.1.0"
-# skill-pandora-mycroft = {path = "/Users/Mike/Documents/coding/VoiceAssistants/skill-pandora-mycroft", allow-prereleases = true}
-skill-plex = { git = "https://github.com/OscillateLabsLLC/skill-plex" }
-skill-cocktail = { git = "https://github.com/oscillatelabsllc/skill-cocktail" }
-ovos-skill-volume = {version = "^0.0.2a10", allow-prereleases = true}
+[dependency-groups]
+mike = [
+    "neon-homeassistant-skill>=0.0.22",
+    "ovos-phal-plugin-homeassistant==0.0.4a11",
+    "skill-plex",
+]
 
-[tool.poetry.group.ocp_youtube.dependencies]
-tutubo = { version = "^0.0.2a1.post1", allow-prereleases = true }
-yt-dlp = { version = "^2024.7.16.232919.dev0", allow-prereleases = true }
-ovos-ocp-youtube-plugin = { version = "^0.0.2a2", allow-prereleases = true }
-# ovos-skills, best for headless but works everywhere
-ovos-skill-youtube-music = { git = "https://github.com/OpenVoiceOS/skill-ovos-youtube-music" }
+[tool.uv]
+constraint-dependencies = [
+    "ovos-adapt-parser>=1.0.5,<2.0.0",
+    "ovos-audio-plugin-mpv>=0.2.1,<1.0.0",
+    "ovos-audio>=0.3.1,<1.0.0",
+    "ovos-audio-plugin-simple>=0.1.0,<1.0.0",
+    "ovos-bidirectional-translation-plugin>=0.1.2,<1.0.0",
+    "ovos-bus-client>=1.0.6,<2.0.0",
+    "ovos-classifiers>=0.0.0a59,<1.0.0",
+    "ovos-color-parser>=0.0.7,<1.0.0",
+    "ovos-common-query-pipeline-plugin>=1.0.8,<2.0.0",
+    "ovos-config>=0.4.6,<1.1.0",
+    "ovos-core>=0.3.5,<1.0.0",
+    "ovos-date-parser>=0.4.0,<1.0.0",
+    "ovos-dinkum-listener>=0.3.4,<1.0.0",
+    "ovos-gui>=1.1.0,<2.0.0",
+    "ovos-gui-plugin-shell-companion>=1.0.4,<2.0.0",
+    "ovos-mark1-utils>=0.0.1,<1.0.0",
+    "ovos-media-plugin-chromecast>=0.1.0,<1.0.0",
+    "ovos-media-plugin-spotify>=0.2.4,<1.0.0",
+    "ovos-messagebus>=0.0.8,<1.0.0",
+    "ovos-microphone-plugin-alsa>=0.1.0,<1.0.0",
+    "ovos-microphone-plugin-sounddevice>=0.0.0,<1.0.0",
+    "ovos-number-parser>=0.0.2,<1.0.0",
+    "ovos-ocp-files-plugin>=0.13.1,<1.0.0",
+    "ovos-ocp-m3u-plugin>=0.0.2,<1.0.0",
+    "ovos-ocp-news-plugin>=0.0.4,<1.0.0",
+    "ovos-ocp-pipeline-plugin>=1.0.11,<2.0.0",
+    "ovos-ocp-rss-plugin>=0.0.3,<1.0.0",
+    "ovos-ocp-youtube-plugin>=0.0.3,<1.0.0",
+    "ovos-padatious>=1.1.1,<2.0.0",
+    "ovos-phal>=0.2.7,<1.0.0",
+    "ovos-phal-plugin-alsa>=0.1.2,<1.0.0",
+    "ovos-phal-plugin-balena-wifi>=1.2.1,<2.0.0",
+    "ovos-phal-plugin-connectivity-events>=0.1.1,<1.0.0",
+    "ovos-phal-plugin-hotkeys>=0.1.1,<1.0.0",
+    "ovos-phal-plugin-ipgeo>=0.1.2,<1.0.0",
+    "ovos-phal-plugin-mk1>=0.1.3,<1.0.0",
+    "ovos-phal-plugin-network-manager>=1.3.4,<2.0.0",
+    "ovos-phal-plugin-oauth>=0.1.3,<1.0.0",
+    "ovos-phal-plugin-system>=1.2.0,<2.0.0",
+    "ovos-phal-plugin-wallpaper-manager>=0.2.0,<1.0.0",
+    "ovos-phal-plugin-wifi-setup>=1.1.8,<2.0.0",
+    "ovos-plugin-common-play>=1.1.9,<2.0.0",
+    "ovos-plugin-manager>=0.7.0,<1.0.0",
+    "ovos-skill-alerts>=0.1.15,<1.0.0",
+    "ovos-skill-application-launcher>=0.5.10,<1.0.0",
+    "ovos-skill-audio-recording>=0.2.4,<1.0.0",
+    "ovos-skill-boot-finished>=0.4.9,<1.0.0",
+    "ovos-skill-cmd>=0.2.8,<1.0.0",
+    "ovos-skill-color-picker>=0.0.5,<1.0.0",
+    "ovos-skill-confucius-quotes>=0.1.10,<1.0.0",
+    "ovos-skill-date-time>=0.4.6,<1.0.0",
+    "ovos-skill-days-in-history>=0.3.9,<1.0.0",
+    "ovos-skill-dictation>=0.2.10,<1.0.0",
+    "ovos-skill-fallback-unknown>=0.1.5,<1.0.0",
+    "ovos-skill-hello-world>=0.1.10,<1.0.0",
+    "ovos-skill-homescreen>=3.0.2,<4.0.0",
+    "ovos-skill-ip>=0.2.6,<1.0.0",
+    "ovos-skill-iss-location>=0.2.10,<1.0.0",
+    "ovos-skill-laugh>=0.1.1,<1.0.0",
+    "ovos-skill-local-media>=0.2.9,<1.0.0",
+    "ovos-skill-moviemaster>=0.0.7,<1.0.0",
+    "ovos-skill-naptime>=0.3.11,<1.0.0",
+    "ovos-skill-number-facts>=0.1.10,<1.0.0",
+    "ovos-skill-parrot>=0.1.14,<1.0.0",
+    "ovos-skill-personal>=0.1.9,<1.0.0",
+    "ovos-skill-pyradios>=0.1.4,<1.0.0",
+    "ovos-skill-randomness>=0.1.1,<1.0.0",
+    "ovos-skill-screenshot>=0.0.6,<1.0.0",
+    "ovos-skill-somafm>=0.1.5,<1.0.0",
+    "ovos-skill-speedtest>=0.3.2,<1.0.0",
+    "ovos-skill-spelling>=0.2.5,<1.0.0",
+    "ovos-skill-volume>=0.1.12,<1.0.0",
+    "ovos-skill-wallpapers>=1.0.9,<2.0.0",
+    "ovos-skill-weather>=0.1.14,<1.0.0",
+    "ovos-skill-wikihow>=0.2.13,<1.0.0",
+    "ovos-skill-wikipedia>=0.5.14,<1.0.0",
+    "ovos-solver-openai-persona-plugin>=1.1.0,<2.0.0",
+    "ovos-solver-yes-no-plugin>=0.2.0,<1.0.0",
+    "ovos-stt-plugin-chromium>=0.1.2,<1.0.0",
+    "ovos-stt-plugin-server>=0.1.0,<1.0.0",
+    "ovos-translate-server-plugin>=0.0.2,<1.0.0",
+    "ovos-tts-plugin-server>=0.0.2,<1.0.0",
+    "ovos-utils>=0.6.0,<1.0.0",
+    "ovos-utterance-corrections-plugin>=0.1.0,<1.0.0",
+    "ovos-utterance-normalizer>=0.2.1,<1.0.0",
+    "ovos-utterance-plugin-cancel>=0.2.3,<1.0.0",
+    "ovos-vad-plugin-noise>=0.1.0,<1.0.0",
+    "ovos-vad-plugin-silero>=0.0.2,<1.0.0",
+    "ovos-workshop>=3.1.2,<4.0.0",
+    "ovos-ww-plugin-openwakeword>=0.4.1,<1.0.0",
+    "ovos-ww-plugin-precise-lite>=0.1.3,<1.0.0",
+]
 
-[tool.poetry.group.padatious.dependencies]
-fann2 = "^1.1.2"
-padatious = "^0.4.8"
+[tool.uv.sources]
+ovos-phal-plugin-homeassistant = { git = "https://github.com/OpenVoiceOS/ovos-PHAL-plugin-homeassistant", rev = "FEAT_Multiple" }
+neon-homeassistant-skill = { git = "https://github.com/mikejgray/neon-homeassistant-skill", rev = "d9ff37600067b571a07d9c0e7266f99a18c16e98" }
+skill-plex = { path = "../skill-plex" }
+# ovos-skill-openhab = { git = "https://github.com/OscillateLabsLLC/ovos-skill-openhab", rev = "Fix_RefreshItems" }
 
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+# [tool.poetry.group.ocp_youtube.dependencies]
+# tutubo = { version = "^0.0.2a1.post1", allow-prereleases = true }
+# yt-dlp = { version = "^2024.7.16.232919.dev0", allow-prereleases = true }
+# ovos-ocp-youtube-plugin = { version = "<1.0.0", allow-prereleases = true }
+# # ovos-skills, best for headless but works everywhere
+# ovos-skill-youtube-music = { version = "<1.0.0", allow-prereleases = true }

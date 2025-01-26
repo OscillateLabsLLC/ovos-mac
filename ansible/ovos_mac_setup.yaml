@@ -9,7 +9,8 @@
     ovos_log_dir: "{{ ansible_env.HOME }}/.local/state/mycroft/logs"
     ovos_repo_url: "https://github.com/OscillateLabsLLC/ovos-mac.git"
     ovos_repo_dest: "{{ ansible_env.HOME }}/ovos-mac"
-    python_version: "3.11"
+    ovos_venv: "{{ ansible_env.HOME }}/.venvs/ovos-mac"
+    python_version: "3.10"
     ovos_services:
       - messagebus
       - core
@@ -72,21 +73,10 @@
         name: "python@{{ python_version }}"
         state: present
 
-    - name: Install pipx
+    - name: Install uv
       community.general.homebrew:
-        name: pipx
+        name: uv
         state: present
-
-    - name: Ensure pipx is in PATH
-      ansible.builtin.lineinfile:
-        path: "{{ ansible_env.HOME }}/.zshrc"
-        line: 'export PATH="$HOME/.local/bin:$PATH"'
-        create: yes
-
-    - name: Install Poetry using pipx
-      ansible.builtin.shell: pipx install poetry
-      args:
-        creates: "{{ ansible_env.HOME }}/.local/bin/poetry"
 
     - name: Install mpv for music/podcast playback
       community.general.homebrew:
@@ -170,6 +160,7 @@
             "play_mp3_cmdline": "afplay %1",
             "enable_old_audioservice": true,
             "disable_ocp": false,
+            "fake_barge_in": false,
             "stt": {
               "module": "ovos-stt-plugin-chromium",
               "fallback": { "module": "ovos-stt-plugin-server" }
@@ -181,6 +172,8 @@
             "listener": {
               "silence_end": 0.5,
               "recording_timeout": 7,
+              "fake_barge_in": false,
+              "barge_in_volume": 60,
               "microphone": {
                 "module": "ovos-microphone-plugin-pyaudio"
               },
@@ -193,22 +186,6 @@
             },
             "padatious": {
               "regex_only": false
-            },
-            "intents": {
-              "pipeline": [
-                "stop_high",
-                "converse",
-                "ocp_high",
-                "padatious_high",
-                "adapt_high",
-                "ocp_medium",
-                "fallback_high",
-                "stop_medium",
-                "adapt_medium",
-                "padatious_medium",
-                "common_qa",
-                "fallback_medium"
-              ]
             }
           }
         dest: "{{ ovos_config_dir }}/mycroft.conf.mac"
@@ -229,7 +206,7 @@
       ansible.builtin.git:
         repo: "{{ ovos_repo_url }}"
         dest: "{{ ovos_repo_dest }}"
-        version: mike
+        version: uv-latest
         update: no
       when: not ovos_repo_check.stat.exists
 
@@ -247,21 +224,18 @@
         force: true
       when: ovos_repo_check.stat.exists
 
-    - name: Ensure Poetry environment uses the correct Python version
+    - name: Create Python virtual environment with uv
       ansible.builtin.shell: |
-        source {{ ansible_env.HOME }}/.zshrc
-        poetry env use "{{ homebrew_python_path }}"
+        uv venv {{ ovos_venv }}
       args:
-        chdir: "{{ ovos_repo_dest }}"
-        executable: /bin/zsh
+        creates: "{{ ovos_venv }}"
 
-    - name: Install OVOS dependencies with Padatious
+    - name: Install OVOS dependencies with UV
       ansible.builtin.shell: |
-        source {{ ansible_env.HOME }}/.zshrc
-        poetry config virtualenvs.path {{ ovos_repo_dest }}/.venv
-        LIBRARY_PATH=/usr/local/lib poetry install --with padatious
+        source {{ ovos_venv }}/bin/activate
+        cd {{ ovos_repo_dest }}
+        LIBRARY_PATH=/usr/local/lib uv sync --extras padatious
       args:
-        chdir: "{{ ovos_repo_dest }}"
         executable: /bin/zsh
 
     - name: Create symbolic link for libdoublefann
@@ -409,6 +383,10 @@
       ansible.builtin.blockinfile:
         path: "{{ ansible_env.HOME }}/.zshrc"
         block: |
+          export PYTHONPATH="{{ ovos_repo_dest }}"
+          # OVOS virtual environment
+          source {{ ovos_venv }}/bin/activate
+
           # OVOS settings and helpers
           setopt extended_glob
 

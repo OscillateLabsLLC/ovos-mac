@@ -6,6 +6,7 @@
   "play_mp3_cmdline": "afplay %1",
   "enable_old_audioservice": true,
   "disable_ocp": false,
+  "fake_barge_in": false,
   "stt": {
     "module": "ovos-stt-plugin-chromium",
     "fallback": { "module": "ovos-stt-plugin-server" }
@@ -17,6 +18,8 @@
   "listener": {
     "silence_end": 0.5,
     "recording_timeout": 7,
+    "fake_barge_in": false,
+    "barge_in_volume": 60,
     "microphone": {
       "module": "ovos-microphone-plugin-pyaudio"
     },
@@ -29,21 +32,5 @@
   },
   "padatious": {
     "regex_only": false
-  },
-  "intents": {
-    "pipeline": [
-      "stop_high",
-      "converse",
-      "ocp_high",
-      "padatious_high",
-      "adapt_high",
-      "ocp_medium",
-      "fallback_high",
-      "stop_medium",
-      "adapt_medium",
-      "padatious_medium",
-      "common_qa",
-      "fallback_medium"
-    ]
   }
 }
