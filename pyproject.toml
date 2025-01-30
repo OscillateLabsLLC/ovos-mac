@@ -61,7 +61,6 @@ dependencies = [
     "quebra-frases==0.3.7",
     "setuptools==75.8.0",
     "skill-ddg==0.1.15",
-    "skill-easter-eggs>=0.1.1",
     "skill-monster-scanner==1.0.1",
     "skill-wolfie>=0.2.15",
     "tensorflow==2.17.0",
@@ -71,6 +70,8 @@ dependencies = [
     "watchdog>=2.1",
     "neon-homeassistant-skill",
     "skill-plex",
+    "skill-easter-eggs",
+    "skill-ovos-fallback-chatgpt>=0.1.13",
 ]
 
 [tool.setuptools]
@@ -183,7 +184,8 @@ constraint-dependencies = [
 [tool.uv.sources]
 ovos-phal-plugin-homeassistant = { git = "https://github.com/OpenVoiceOS/ovos-PHAL-plugin-homeassistant", rev = "FEAT_Multiple" }
 neon-homeassistant-skill = { git = "https://github.com/mikejgray/neon-homeassistant-skill", rev = "d9ff37600067b571a07d9c0e7266f99a18c16e98" }
-skill-plex = { path = "../skill-plex" }
+skill-easter-eggs = { git = "https://github.com/openvoiceos/ovos-skill-easter-eggs", rev = "FIX_LoadNewerVersions" }
+skill-plex = { git = "https://github.com/oscillatelabsllc/skill-plex" }
 # ovos-skill-openhab = { git = "https://github.com/OscillateLabsLLC/ovos-skill-openhab", rev = "Fix_RefreshItems" }
 
 # [tool.poetry.group.ocp_youtube.dependencies]

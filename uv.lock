@@ -1480,6 +1480,7 @@ dependencies = [
     { name = "skill-ddg" },
     { name = "skill-easter-eggs" },
     { name = "skill-monster-scanner" },
+    { name = "skill-ovos-fallback-chatgpt" },
     { name = "skill-plex" },
     { name = "skill-wolfie" },
     { name = "tensorflow" },
@@ -1552,9 +1553,10 @@ requires-dist = [
     { name = "quebra-frases", specifier = "==0.3.7" },
     { name = "setuptools", specifier = "==75.8.0" },
     { name = "skill-ddg", specifier = "==0.1.15" },
-    { name = "skill-easter-eggs", specifier = ">=0.1.1" },
+    { name = "skill-easter-eggs", git = "https://github.com/openvoiceos/ovos-skill-easter-eggs?rev=FIX_LoadNewerVersions" },
     { name = "skill-monster-scanner", specifier = "==1.0.1" },
-    { name = "skill-plex", directory = "../skill-plex" },
+    { name = "skill-ovos-fallback-chatgpt", specifier = ">=0.1.13" },
+    { name = "skill-plex", git = "https://github.com/oscillatelabsllc/skill-plex" },
     { name = "skill-wolfie", specifier = ">=0.2.15" },
     { name = "tensorflow", specifier = "==2.17.0" },
     { name = "tflite", specifier = "==2.10.0" },
@@ -1566,7 +1568,18 @@ requires-dist = [
 mike = [
     { name = "neon-homeassistant-skill", git = "https://github.com/mikejgray/neon-homeassistant-skill?rev=d9ff37600067b571a07d9c0e7266f99a18c16e98" },
     { name = "ovos-phal-plugin-homeassistant", git = "https://github.com/OpenVoiceOS/ovos-PHAL-plugin-homeassistant?rev=FEAT_Multiple" },
-    { name = "skill-plex", directory = "../skill-plex" },
+    { name = "skill-plex", git = "https://github.com/oscillatelabsllc/skill-plex" },
+]
+
+[[package]]
+name = "ovos-mark1-utils"
+version = "0.0.1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "ovos-bus-client" },
+]
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/7a/ee/6eff60f7e5f1e182147c2596c4470da5312f129a3dc14cf606d760baf466/ovos_mark1_utils-0.0.1-py3-none-any.whl", hash = "sha256:5cf8a613e6161bfb133819510dc8e95456a78609c7c6fddbde6f912a82716ed0", size = 19675 },
 ]
 
 [[package]]
@@ -1740,7 +1753,7 @@ wheels = [
 
 [[package]]
 name = "ovos-plugin-manager"
-version = "0.8.0"
+version = "0.8.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "combo-lock" },
@@ -1753,9 +1766,9 @@ dependencies = [
     { name = "requests" },
     { name = "setuptools" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/36/35/22808c864d058ad5fa5e721ce13b1fb16e5b2755eddff92b1b4f1fc4f8db/ovos-plugin-manager-0.8.0.tar.gz", hash = "sha256:25f307d0319e2f5eba1349c7e5f2d497fadbcb67862e02e3ed04c14d32f49637", size = 88259 }
+sdist = { url = "https://files.pythonhosted.org/packages/15/03/e274a0c28f518bee32b92fc3060bfd91c49abf494478bc47bc35df4fedcf/ovos-plugin-manager-0.8.2.tar.gz", hash = "sha256:09f5b4fb69cd59cdd31c74e0dfb31d8d732ce86089119e1ec8f4667b50525d8a", size = 88601 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/40/75/e1838ebbbd440834cd64577e717b324d5b2ef126f7e22e7ad4a57803859e/ovos_plugin_manager-0.8.0-py3-none-any.whl", hash = "sha256:f56c13f3816754eb6be38edd54ec3a2900ecf2e617ac9973f449933046e4c10f", size = 118942 },
+    { url = "https://files.pythonhosted.org/packages/87/23/0ba6bdffa9384fcd66febc9d5ff8adbaa57134f65afc998f490eebad108e/ovos_plugin_manager-0.8.2-py3-none-any.whl", hash = "sha256:1d3d49b7abdb16f722f1dd370c5781af43f9c7301427adbcff2de4925e138b86", size = 119269 },
 ]
 
 [[package]]
@@ -2100,7 +2113,7 @@ wheels = [
 
 [[package]]
 name = "ovos-workshop"
-version = "3.3.4"
+version = "3.3.5"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "langcodes" },
@@ -2112,9 +2125,9 @@ dependencies = [
     { name = "padacioso" },
     { name = "rapidfuzz" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/3e/b3/03becb7673c33cb56562ed80bfc21c437f6d84cf1cdf1001e7fb3acb0318/ovos_workshop-3.3.4.tar.gz", hash = "sha256:6ec28b40c57382cf3279c56a2d963ff7f6f3bada3b0286e7350cc90e094b8bd3", size = 88806 }
+sdist = { url = "https://files.pythonhosted.org/packages/8f/b6/47e8fc30c9dc83529f84c1636b0b4914e0b93ec7d8f3ede6ad7766faafb0/ovos_workshop-3.3.5.tar.gz", hash = "sha256:5a5f7f30e0096371d035a3ede9610eca074e245b9f6bf03be4fea54ec493b61a", size = 89118 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/d9/b3/bb6feee64a66fbfc49e77edd2b69c9608be516ad0474bd0d509b18304358/ovos_workshop-3.3.4-py3-none-any.whl", hash = "sha256:cad0cda31c52db3aeb9518472a7cd9c1d0b5a92e9701e838edd888b08cc4e74f", size = 103410 },
+    { url = "https://files.pythonhosted.org/packages/7a/02/03e9899a0df63bf9cef73afcf9a55bb2f6bac9f59fee8cd0390202b78dbe/ovos_workshop-3.3.5-py3-none-any.whl", hash = "sha256:4301ade2f03cbb9dbdf9abb746ca4f750d73d44cc6935df05f7f7242e10540fa", size = 103789 },
 ]
 
 [[package]]
@@ -2943,14 +2956,15 @@ wheels = [
 
 [[package]]
 name = "skill-easter-eggs"
-version = "0.1.1"
-source = { registry = "https://pypi.org/simple" }
+version = "1.0.1a4"
+source = { git = "https://github.com/openvoiceos/ovos-skill-easter-eggs?rev=FIX_LoadNewerVersions#e117ac603c492173a8bf8fc8149bec82a3c85dad" }
 dependencies = [
+    { name = "ovos-bus-client" },
+    { name = "ovos-mark1-utils" },
+    { name = "ovos-number-parser" },
+    { name = "ovos-utils" },
+    { name = "ovos-workshop" },
     { name = "python-dateutil" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/a4/94/6ac1e6312a1bbf43ba5df9cfba67448275a00d08d4719f20bdee5f9a97bd/skill-easter-eggs-0.1.1.tar.gz", hash = "sha256:4cd14a494aea9dd40e852feddb500a09a24ab57062e351f71735223942400dbb", size = 21752346 }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/4f/da/8e3e4531adf170b8fe9d5c327c0b320069dc21d45524e1f9f42d651222b0/skill_easter_eggs-0.1.1-py3-none-any.whl", hash = "sha256:cb49fe121c48b75a092f2dee01415f3455354779700deaf87adfb6177c07b1c1", size = 21773003 },
 ]
 
 [[package]]
@@ -2969,20 +2983,29 @@ wheels = [
 ]
 
 [[package]]
+name = "skill-ovos-fallback-chatgpt"
+version = "0.1.13"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "ovos-plugin-manager" },
+    { name = "ovos-solver-openai-persona-plugin" },
+    { name = "ovos-translate-server-plugin" },
+    { name = "ovos-utils" },
+    { name = "ovos-workshop" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/07/19/6912f42d33ee78fcac4deaf53cf56b74a87e634cfc2f87703ae90d924c9c/skill-ovos-fallback-chatgpt-0.1.13.tar.gz", hash = "sha256:eef18b0e7209d158e99295fcf77ba68524d1487e81600e84634e4f7e2ca9b281", size = 13810 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/73/63/6859ceee74b8661f27fea193bbd616612482eb933026e61ff1ef03f64d41/skill_ovos_fallback_chatgpt-0.1.13-py3-none-any.whl", hash = "sha256:b35f6eda64b9e783bb5d4f289bcc1eb7d5c4d24d7c65181ea03115a140a5e641", size = 28211 },
+]
+
+[[package]]
 name = "skill-plex"
 version = "0.0.2"
-source = { directory = "../skill-plex" }
+source = { git = "https://github.com/oscillatelabsllc/skill-plex#a7602f7f7a27ed23ad4beb8398121fb3f745992b" }
 dependencies = [
     { name = "ovos-utils" },
     { name = "ovos-workshop" },
     { name = "plexapi" },
-]
-
-[package.metadata]
-requires-dist = [
-    { name = "ovos-utils", specifier = ">=0.0.36" },
-    { name = "ovos-workshop" },
-    { name = "plexapi", specifier = "~=4.13" },
 ]
 
 [[package]]
