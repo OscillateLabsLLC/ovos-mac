@@ -1,8 +1,11 @@
 # ovos-mac
 
-Run OVOS natively on Mac OS. No containers, no PulseAudio - just pure Python.
+![Proof of Concept](https://img.shields.io/badge/status-proof%20of%20concept-orange)
 
-Very much a work in progress! This is intended a proof-of-concept, not as comprehensive instructions. For support, please visit [Matrix chat](https://matrix.to/#/#OpenVoiceOS-Support:matrix.org) or open an issue on this repo.
+> [!CAUTION]
+> Proof of concept, outdated, please use [ovos-installer](https://github.com/OpenVoiceOs/ovos-installer) instead for a more up to date and supported experience. Left for reference only!
+
+Run OVOS natively on Mac OS. No containers, no PulseAudio - just pure Python.
 
 Tested on an M1 Macbook Air and an M2 Macbook Pro.
 
